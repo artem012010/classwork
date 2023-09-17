@@ -42,3 +42,14 @@ if answer == 1:
 else:
    print('Нет. ВОЗ - это Всемирная организация здравоохранения')
 
+
+students = ['Смирнов', 'Иванов', 'Васильев', 'Молоткова', 'Алексашкина', 'Гришин']
+amount_students = len(students)
+students.sort()
+i = 1
+print('Список класса:')
+for student in students:
+   print(i, '-', student)
+   i += 1
+print('Всего учеников:', amount_students)
+
