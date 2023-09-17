@@ -41,3 +41,52 @@ total_topics = len(data)
 print('Общее количество уроков:', total_lessons)
 print('Рассмотрено тем:', total_topics)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+start_year = int(input('Год начала учёта'))
+end_year = int(input('Год окончания учёта'))
+data = dict()
+for year in range(start_year, end_year+1):
+    data[year] = dict()
+for year in range(start_year, end_year+1):
+    while input('Желаете добавить тему в проекты ' + str(year) + ' года (да/нет)?') == 'да':
+        topic = input('Введите тему')
+        projects = list(map(int, input('Введите данные о количестве заявок (в строку через пробел)').split()))
+        if topic in data[year]:
+            data[year][topic] += projects
+        else:
+            data[year][topic] = projects
+
+projects = dict()
+for year in data:
+    for topic in data[year]:
+        total = 0
+        for amount in data[year][topic]:
+            total += amount
+        if topic in projects:
+            projects[topic] += total
+        else:
+            projects[topic] = total
+
+
+print('РЕЗУЛЬТАТЫ АНАЛИЗА:')
+total = 0
+for topic in projects:
+    print(topic, '-', projects[topic], 'проектов.')
+    total += projects[topic]
+print('Общее количество проектов:', total)
+
+
+
+
