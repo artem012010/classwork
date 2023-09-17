@@ -53,3 +53,11 @@ for student in students:
    i += 1
 print('Всего учеников:', amount_students)
 
+trips = ['эрмитаж', 'московский зоопарк', 'кремль', 'зоологический музей']
+searching = input('Запрос:')
+searching = searching.lower()
+if searching in trips:
+   print('Запрос найден в пожеланиях')
+else:
+   print('Такого пожелания нет')
+
