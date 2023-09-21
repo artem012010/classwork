@@ -63,3 +63,20 @@ for topic in projects:
     total += projects[topic]
 print('Общее количество проектов:', total)
 
+
+n = int(input('Введите бюджет компании:')) 
+x = int(input('Введите зарплату senior-разработчика:')) 
+y = int(input('Введите зарплату middle-разработчика:')) 
+z = int(input('Введите зарплату junior-разработчика:')) 
+
+qual1 = n//x 
+balance = n%x 
+qual2 = balance//y 
+balance = balance%y 
+qual3 = balance//z 
+balance = balance%z 
+
+print('Количество senior-разработчиков',qual1)
+print('Количество middle-разработчиков',qual2)
+print('Количество junior-разработчиков',qual3)
+print('Остаток средств после распределения',balance)
