@@ -21,3 +21,20 @@ for mark in marks:
       amount_five += 1
 chance = amount_five/len(marks)*100
 print('Коэффициент идеальности (%) -', chance)
+
+
+
+def print_students(my_students):
+ print('Список класса:')
+ i = 1
+ for student in my_students:
+     print (i, '-', student)
+     i += 1
+
+my_students = ['Абрикосов', 'Воробьева', 'Лисицын', 'Олейник', 'Щукина']
+print_students(my_students)
+
+student = input('Введите фамилию студента:')
+my_students.append(student)
+my_students.sort()
+print_students(my_students)
