@@ -110,3 +110,32 @@ while new !=0:
     new = int(input('Введите вашу цену'))
 print('Продано за', price)
 
+
+
+class TeamMember():
+    def __init__(self, **kwargs):
+        self.data = dict() 
+        for info in kwargs:
+            self.data[info] = kwargs[info]
+    def print_info(self):
+        print(f"{self.data['name']} {self.data['surname']}. Программирует на языке {self.data['language']}.")
+
+
+members = list()
+amount = int(input('Сколько участников вы хотите зарегистрировать?'))
+for i in range(amount):
+    data = input('Введите имя, фамилию, возраст и язык программирования в одну строку через пробел').split()
+    members.append(TeamMember(name = data[0], surname = data[1], age = int(data[2]), language = data[3]))
+
+
+youngest = members[0]
+for member in members:
+    if member.data['age'] < youngest.data['age']:
+        youngest = member
+
+
+print('Данные о самом молодом участнике хакатона:')
+youngest.print_info()
+
+
+
