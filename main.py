@@ -56,3 +56,13 @@ while answer != 3:
 print('Ждём вас:', student_card)
 
 
+my_shelf = dict()
+author = input('Введите автора:')
+book = input('Введите книгу (s - стоп):')
+books = list()
+while book != 's':
+   books.append(book)
+   book = input('Введите книгу (s - стоп):')
+my_shelf[author] = books
+print(my_shelf)
+
