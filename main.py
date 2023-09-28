@@ -63,3 +63,26 @@ else:
 
 print(f'Услуг: {total}, категорий: {categories}.')
 print('Наши специалисты уже начали работу!')
+
+
+
+class Land():
+   def __init__(self, length, width):
+       self.length = length
+       self.width = width
+   def print_info(self):
+       print(f'Длина участка: {self.length}, ширина: {self.width}.')
+   def calc_perimeter(self):
+       self.perimeter = (self.length + self.width) * 2
+       return self.perimeter
+   def calc_area(self):
+       self.area = self.length * self.width
+       return self.area
+ 
+a = int(input('Введите длину:'))
+b = int(input('Введите ширину:'))
+land_plot = Land(a, b)
+land_plot.print_info()
+print('Периметр участка:', land_plot.calc_perimeter())
+print('Площадь участка:', land_plot.calc_area())
+
