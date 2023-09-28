@@ -86,3 +86,21 @@ land_plot.print_info()
 print('Периметр участка:', land_plot.calc_perimeter())
 print('Площадь участка:', land_plot.calc_area())
 
+
+
+def check_price(old_price, new_price):
+    if int(old_price*1.1) > new_price:
+        return False
+    return True
+
+
+price = int(input('Введите начальную цену'))
+new = int(input('Введите вашу цену'))
+while new !=0:
+    if check_price(price, new):
+        price = new
+        print('Установлена новая цена:', price)
+    else:
+        print('Ваша цена слишком низкая')
+    new = int(input('Введите вашу цену'))
+print('Продано за', price)
