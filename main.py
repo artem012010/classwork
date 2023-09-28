@@ -28,3 +28,38 @@ while input('Хотите сделать заказ? (1 - да, 0 - нет)') !=
     print(f'Стоимость услуг: {price} руб.')
 
 print('Спасибо за сотрудничество! Хорошего дня!')
+
+
+
+
+
+#Первая звездочка
+def count_services(**kwargs):
+    total = 0
+    categories = 0
+    for category in kwargs:
+        if kwargs[category] > 0:
+            total += kwargs[category]
+            categories += 1
+    return total, categories
+
+
+
+#Вторая звездочка
+from count_services import count_services
+
+
+service = input('Для какого сервиса вы хотите заказать услуги (1 - Инстаграм, 2 - YouTube)?')
+if service == '1':
+    plan = int(input('Введите количество аккаунтов для создания контент-плана'))
+    stories = int(input('Введите количество сториз'))
+    posts = int(input('Введите количество постов'))
+    total, categories = count_services(plan = plan, stories = stories, posts = posts)
+else:
+    cover = int(input('Введите количество роликов, для которых нужны обложки'))
+    editing = int(input('Введите количество роликов, для которых нужен монтаж'))
+    total, categories = count_services(cover = cover, editing = editing)
+
+
+print(f'Услуг: {total}, категорий: {categories}.')
+print('Наши специалисты уже начали работу!')
