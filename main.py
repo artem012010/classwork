@@ -1,46 +1,30 @@
-class Converter():
-   def __init__(self, usd):
-       self.usd = usd
- 
-   def rub_to_usd(self, rub_value):
-       usd_value = rub_value/self.usd
-       print(round(usd_value, 2))
- 
-   def usd_to_rub(self, usd_value):
-       rub_value = usd_value*self.usd
-       print(round(rub_value, 2))
- 
-a = int(input('Введите курс доллара')) 
-b = int(input('Введите сумму для обмена')) 
-conv = Converter(a)
-option = int(input('1 - доллары в рубли / 2 - рубли в доллары'))
-if option == 1:
-   conv.usd_to_rub(b)
-else:
-   conv.rub_to_usd(b)
+class Price_list():
+   def __init__ (self,name):
+       self.name = name
+       self.pricelist = dict()
+   def add_price(self, **kwargs):
+       for key in kwargs:
+           self.pricelist[key] = kwargs[key]
+   def order(self, **kwargs):
+       sum = 0
+       for key in kwargs:
+           if key in self.pricelist:
+               sum += self.pricelist[key] * kwargs[key]
+       return sum
 
-
-
-class Accounting():
-    def __init__(self, account):
-        self.account = account
-    def pay_bill(self, amount):
-        if self.account - amount >= 0:
-            self.account -= amount
-            print(f'Списано {amount} руб. Остаток на счету: {self.account} руб.')
-        else:
-            print('Недостаточно средств для выполнения операции.')
-    def get_money(self, amount):
-        self.account += amount
-        print(f'Зачислено {amount} руб. Остаток на счету: {self.account} руб.')
-
-amount = int(input('Введите данные о сумме на счету'))
-office = Accounting(amount)
-while input('Хотите выполнить операцию? (1 - да, 2 - нет)') == '1':
-    code = input('Введите код операции (1 - зачисление, 2 - списание)')
-    amount = int(input('Введите сумму'))
-    if code == '1':
-        office.get_money(amount)
+my_offer = Price_list('Инстаграм')
+my_offer.add_price(management = 1000, content_plan = 850, style = 500, stories = 100, post = 300)
+while input('Хотите сделать заказ? (1 - да, 0 - нет)') != '0':
+    operation = input('Хотите заказать управление аккаунтами (1) или публикации (2)?')
+    if operation == '1':
+        management = int(input('Сколько новых аккаунтов хотите добавить?'))
+        content_plan = int(input('Для скольких из них будем делать контент-план?'))
+        style = int(input('Для скольких из них будем разрабатывать стиль?'))
+        price = my_offer.order(management = management, content_plan = content_plan, style = style)
     else:
-        office.pay_bill(amount)
-print('Спасибо за работу! Хорошего вечера!')
+        stories = int(input('Сколько сториз хотите заказать?'))
+        post = int(input('Сколько постов хотите заказать?'))
+        price = my_offer.order(stories = stories, post = post)
+    print(f'Стоимость услуг: {price} руб.')
+
+print('Спасибо за сотрудничество! Хорошего дня!')
