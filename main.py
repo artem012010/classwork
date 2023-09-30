@@ -65,3 +65,42 @@ while action != 'off':
        else:
            print('Такого тренинга не существует!')
    action = input('Номер действия (off-выйти):')
+
+
+
+sotrudniki = {
+    'Путин': {
+        'Дожность': 'БОСС',
+        'Эффективность': 90,
+        'Проекты': ['первый', 'второй', 'третий']
+    },
+    'Байден': {
+        'Дожность': 'БОСС',
+        'Эффективность': 100,
+        'Проекты': ['первый', 'второй', 'третий']
+    },
+    'Си': {
+        'Дожность': 'БОСС',
+        'Эффективность': 101,
+        'Проекты': ['первый', 'второй', 'третий']
+    },
+}
+
+print('1\Фамилия всех сотрудников, 2\Самый эффективный 3\Проекты')
+result = int(input('Введите число:'))
+while result != 'off':
+    if result == 1:
+        for surname in sotrudniki:
+            print(surname)
+    elif result == 2:
+        kef = 0
+        for surname in sotrudniki:
+            kef += sotrudniki[surname]['Эффективность']
+        print('Коэфицент эффективности:', kef/len(sotrudniki))
+    elif result == 3:
+        name = input('Какой сотрудник вас интересует?')
+        if name in sotrudniki:
+            print('Проекты:',sotrudniki[name]['Проекты'])
+        else:
+            print('Такого у нас нету')
+    result = input('Введите число:')
