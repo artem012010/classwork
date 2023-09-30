@@ -1,141 +1,177 @@
-def print_info(**kwargs):
-   for key in kwargs:
-       print('Услуга –', key, ', цена –', kwargs[key])
-print_info(stories = 100, management = 1000)
+# программа с двумя экранами
+from kivy.app import App
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import ScreenManager, Screen
+# Экран (объект класса Screen) - это виджет типа "макет" (Screen - наследник класса RelativeLayout).
+# ScreenManager - это особый виджет, который делает видимым один из прописанных в нём экранов.
+
+class FirstScr(Screen):
+    def __init__(self, name='first'):
+        super().__init__(name=name) # имя экрана должно передаваться конструктору класса Screen
+        btn = Button(text="Переключиться на другой экран")
+        btn.on_press = self.next
+        self.add_widget(btn) # экран - это виджет, на котором могут создаваться все другие (потомки)
+
+    def next(self):
+        self.manager.transition.direction = 'left' # объект класса Screen имеет свойство manager                           # - это ссылка на родителя
+        self.manager.current = 'second'
+
+class SecondScr(Screen):
+    def __init__(self, name='second'):
+        super().__init__(name=name)
+        btn = Button(text="Вернись, вернись!")
+        btn.on_press = self.next
+        self.add_widget(btn)
+        
+    def next(self):
+        self.manager.transition.direction = 'right'
+        self.manager.current = 'first'
+
+class MyApp(App):
+    def build(self):
+        sm = ScreenManager()
+        sm.add_widget(FirstScr())
+        sm.add_widget(SecondScr())
+        # будет показан FirstScr, потому что он добавлен первым. Это можно поменять вот так:
+        # sm.current = 'second'
+        return sm
+
+app = MyApp()
+app.run()
 
 
 
-class Price_list():
-   def __init__ (self,name):
-       self.name = name
-       self.pricelist = dict()
-   def add_price(self, **kwargs):
-       for key in kwargs:
-           self.pricelist[key] = kwargs[key]
-   def order(self, **kwargs):
-       sum = 0
-       for key in kwargs:
-           if key in self.pricelist:
-               sum += self.pricelist[key] * kwargs[key]
-       return sum
-
-
-my_offer = Price_list('Инстаграм')
-my_offer.add_price(management = 1000, content_plan = 850, style = 500, stories = 100, post = 300)
-while input('Хотите сделать заказ? (1 - да, 0 - нет)') != '0':
-    operation = input('Хотите заказать управление аккаунтами (1) или публикации (2)?')
-    if operation == '1':
-        management = int(input('Сколько новых аккаунтов хотите добавить?'))
-        content_plan = int(input('Для скольких из них будем делать контент-план?'))
-        style = int(input('Для скольких из них будем разрабатывать стиль?'))
-        price = my_offer.order(management = management, content_plan = content_plan, style = style)
-    else:
-        stories = int(input('Сколько сториз хотите заказать?'))
-        post = int(input('Сколько постов хотите заказать?'))
-        price = my_offer.order(stories = stories, post = post)
-    print(f'Стоимость услуг: {price} руб.')
-
-
-print('Спасибо за сотрудничество! Хорошего дня!')
 
 
 
 
-def count_services(**kwargs):
-    total = 0
-    categories = 0
-    for category in kwargs:
-        if kwargs[category] > 0:
-            total += kwargs[category]
-            categories += 1
-    return total, categories
 
-
-
-from count_services import count_services
-
-
-service = input('Для какого сервиса вы хотите заказать услуги (1 - Инстаграм, 2 - YouTube)?')
-if service == '1':
-    plan = int(input('Введите количество аккаунтов для создания контент-плана'))
-    stories = int(input('Введите количество сториз'))
-    posts = int(input('Введите количество постов'))
-    total, categories = count_services(plan = plan, stories = stories, posts = posts)
-else:
-    cover = int(input('Введите количество роликов, для которых нужны обложки'))
-    editing = int(input('Введите количество роликов, для которых нужен монтаж'))
-    total, categories = count_services(cover = cover, editing = editing)
-
-
-print(f'Услуг: {total}, категорий: {categories}.')
-print('Наши специалисты уже начали работу!')
-
-
-
-class Land():
-   def __init__(self, length, width):
-       self.length = length
-       self.width = width
-   def print_info(self):
-       print(f'Длина участка: {self.length}, ширина: {self.width}.')
-   def calc_perimeter(self):
-       self.perimeter = (self.length + self.width) * 2
-       return self.perimeter
-   def calc_area(self):
-       self.area = self.length * self.width
-       return self.area
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.scrollview import ScrollView
  
-a = int(input('Введите длину:'))
-b = int(input('Введите ширину:'))
-land_plot = Land(a, b)
-land_plot.print_info()
-print('Периметр участка:', land_plot.calc_perimeter())
-print('Площадь участка:', land_plot.calc_area())
+class ScrButton(Button):
+   def __init__(self, screen, direction='right', goal='main', **kwargs):
+       super().__init__(**kwargs)
+       self.screen = screen
+       self.direction = direction
+       self.goal = goal
+   def on_press(self):
+       self.screen.manager.transition.direction = self.direction
+       self.screen.manager.current = self.goal
+      
+class MainScr(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+ 
+       vl = BoxLayout(orientation='vertical', padding=8, spacing=8)
+       hl = BoxLayout()
+       txt = Label(text= 'Выбери экран')
+ 
+       vl.add_widget(ScrButton(self, direction='down', goal='first', text="1"))
+       vl.add_widget(ScrButton(self, direction='left', goal='second', text="2"))
+       vl.add_widget(ScrButton(self, direction='up', goal='third', text="3"))
+       vl.add_widget(ScrButton(self, direction='right', goal='fourth', text="4"))
+ 
+       hl.add_widget(txt)
+       hl.add_widget(vl)
+       self.add_widget(hl)
+ 
+class FirstScr(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+ 
+       vl = BoxLayout(orientation='vertical', size_hint=(.5, .5), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+       btn = Button(text= 'Выбор: 1', size_hint=(.5, 1), pos_hint={'left': 0})
+       btn_back = ScrButton(self, direction='up', goal='main', text="Назад", size_hint=(.5, 1), pos_hint={'right': 1})
+       vl.add_widget(btn)
+       vl.add_widget(btn_back)
+       self.add_widget(vl)
+ 
+class SecondScr(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+ 
+       vl = BoxLayout(orientation='vertical')
+ 
+       self.txt = Label(text= 'Выбор: 2') 
+       vl.add_widget(self.txt)
 
+       hl_0 = BoxLayout(size_hint=(0.8, None), height='30sp')
+       lbl1 = Label(text='Введите пароль:', halign='right')
+       self.input = TextInput(multiline=False)
 
-def check_price(old_price, new_price):
-    if int(old_price*1.1) > new_price:
-        return False
-    return True
+       hl_0.add_widget(lbl1)
+       hl_0.add_widget(self.input)
+       vl.add_widget(hl_0)
+ 
+       
+       hl = BoxLayout(size_hint=(0.5, 0.2), pos_hint={'center_x': 0.5})
+       btn_false = Button(text="OK!")
+       btn_back = ScrButton(self, direction='right', goal='main', text="Назад")
 
+       hl.add_widget(btn_false)
+       hl.add_widget(btn_back)
+       vl.add_widget(hl)
+       self.add_widget(vl)
+       btn_false.on_press = self.change_text
+ 
+   def change_text(self):
+       self.txt.text = self.input.text + '? Не сработало ...'       
+ 
+ 
+class ThirdScr(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+ 
+       layout = BoxLayout(orientation='vertical')
+       btn_back = ScrButton(self, direction='down', goal='main', text="Назад", size_hint=(1, None), height='40sp')
+       test_label = Label(text = "Твой собственный экран")
+       layout.add_widget(test_label)
+       layout.add_widget(btn_back)
+       self.add_widget(layout)
 
-price = int(input('Введите начальную цену'))
-new = int(input('Введите вашу цену'))
-while new !=0:
-    if check_price(price, new):
-        price = new
-        print('Установлена новая цена:', price)
-    else:
-        print('Ваша цена слишком низкая')
-    new = int(input('Введите вашу цену'))
-print('Продано за', price)
+class FourthScr(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+ 
+       vl = BoxLayout(orientation='vertical', spacing=8)
+       a = 'START ' + 'Выбор: 3 ' * 200
+ 
+       test_label = Label(text = "Дополнительное задание",size_hint=(0.3,None))
 
+       btn_back = ScrButton(self, direction='left', goal='main', text="Назад", size_hint=(1, .2), pos_hint={'center-x': 0.5})
+ 
+       self.label = Label(text=a, size_hint_y=None, font_size='24sp', halign='left', valign='top')  
+       self.label.bind(size=self.resize)
+       self.scroll = ScrollView(size_hint=(1, 1))
+       self.scroll.add_widget(self.label)
 
+       vl.add_widget(test_label)
+       vl.add_widget(btn_back)
+       vl.add_widget(self.scroll)
+       self.add_widget(vl)
+ 
+   def resize(self, *args):
+       self.label.text_size = (self.label.width, None)
+       self.label.texture_update()
+       self.label.height = self.label.texture_size[1]
 
-class TeamMember():
-    def __init__(self, **kwargs):
-        self.data = dict() 
-        for info in kwargs:
-            self.data[info] = kwargs[info]
-    def print_info(self):
-        print(f"{self.data['name']} {self.data['surname']}. Программирует на языке {self.data['language']}.")
-
-
-members = list()
-amount = int(input('Сколько участников вы хотите зарегистрировать?'))
-for i in range(amount):
-    data = input('Введите имя, фамилию, возраст и язык программирования в одну строку через пробел').split()
-    members.append(TeamMember(name = data[0], surname = data[1], age = int(data[2]), language = data[3]))
-
-
-youngest = members[0]
-for member in members:
-    if member.data['age'] < youngest.data['age']:
-        youngest = member
-
-
-print('Данные о самом молодом участнике хакатона:')
-youngest.print_info()
-
-
-
+class MyApp(App):
+   def build(self):
+       sm = ScreenManager()
+       sm.add_widget(MainScr(name='main'))
+       sm.add_widget(FirstScr(name='first'))
+       sm.add_widget(SecondScr(name='second'))
+       sm.add_widget(ThirdScr(name='third'))
+       sm.add_widget(FourthScr(name='fourth'))
+ 
+       return sm
+ 
+MyApp().run()
