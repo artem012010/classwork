@@ -13,3 +13,23 @@ for result in test_results[1]:
    average += result
 print('Средний результат «после»:', average/len(test_results[1]))
 
+
+departments = {
+   'продажи':{
+       'сотрудники': ['Гришин', 'Иванова'],
+       'менеджер': 'Иванова',
+       'заведующий': 'Гришин'
+   },
+   'разработка':{
+       'сотрудники': ['Васильев', 'Ежов', 'Петрова'],
+       'менеджер': 'Ежова',
+       'заведующий': 'Петрова'
+   }
+}
+print('Заведующие отделов:')
+for department in departments:
+   print('-', departments[department]['заведующий'])
+  
+print('Проектные менеджеры отделов:')
+for department in departments:
+   print('-', departments[department]['менеджер'])
