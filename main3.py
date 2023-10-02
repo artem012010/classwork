@@ -25,3 +25,16 @@ if answer == 'да':
         print('Стиральный порошок, Щётка для обуви')
 else:
     print('Дайте знать, если передумаете!')
+
+
+
+#поиск наибольшей цены из трёх
+price1 = int(input('Цена первого товара:'))
+price2 = int(input('Цена второго товара:'))
+price3 = int(input('Цена третьего товара:'))
+
+if price1 <= price2:
+    price1 = price2
+if price1 <= price3:
+    price1 = price3
+print('Акция! К оплате за три товара:', price1)
