@@ -1,46 +1,182 @@
-# программа с двумя экранами
 from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
-# Экран (объект класса Screen) - это виджет типа "макет" (Screen - наследник класса RelativeLayout).
-# ScreenManager - это особый виджет, который делает видимым один из прописанных в нём экранов.
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+from kivy.core.window import Window
+from kivy.uix.scrollview import ScrollView
+ 
+from instructions import txt_instruction, txt_test1, txt_test2, txt_test3, txt_sits
+from ruffier import test
+ 
+age = 7
+name = ""
+p1, p2, p3 = 0, 0, 0
+ 
+class InstrScr(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+ 
+       instr = Label(text=txt_instruction)
+ 
+       lbl1 = Label(text='Введите имя:', halign='right')
+       self.in_name = TextInput(multiline=False)
+       lbl2 = Label(text='Введите возраст:', halign='right')
+       self.in_age = TextInput(text='7', multiline=False)
+       self.btn = Button(text='Начать', size_hint=(0.3, 0.2), pos_hint={'center_x': 0.5})
+       self.btn.on_press = self.next
+ 
+       line1 = BoxLayout(size_hint=(0.8, None), height='30sp')
+       line2 = BoxLayout(size_hint=(0.8, None), height='30sp')
+       line1.add_widget(lbl1)
+       line1.add_widget(self.in_name)
+       line2.add_widget(lbl2)
+       line2.add_widget(self.in_age)
+ 
+       outer = BoxLayout(orientation='vertical', padding=8, spacing=8)
+       outer.add_widget(instr)
+       outer.add_widget(line1)
+       outer.add_widget(line2)
+       outer.add_widget(self.btn)
+ 
+       self.add_widget(outer)
+ 
+   def next(self):
+           global name
+           name = self.in_name.text
+           self.manager.current = 'pulse1'
+ 
+class PulseScr(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+      
+       instr = Label(text=txt_test1)
+      
+       line = BoxLayout(size_hint=(0.8, None), height='30sp')
+       lbl_result = Label(text='Введите результат:', halign='right')
+       self.in_result = TextInput(text='0', multiline=False)
+      
+       line.add_widget(lbl_result)
+       line.add_widget(self.in_result)
+ 
+       self.btn = Button(text='Продолжить', size_hint=(0.3, 0.2), pos_hint={'center_x': 0.5})
+       self.btn.on_press = self.next
+ 
+       outer = BoxLayout(orientation='vertical', padding=8, spacing=8)
+       outer.add_widget(instr)
+       outer.add_widget(line)
+       outer.add_widget(self.btn)
+ 
+       self.add_widget(outer)
+ 
+   def next(self):
+       global p1
+       p1 = int(self.in_result.text)
+       self.manager.current = 'sits'
+ 
+class CheckSits(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+ 
+       instr = Label(text=txt_sits)
+ 
+       self.btn = Button(text='Продолжить', size_hint=(0.3, 0.2), pos_hint={'center_x': 0.5})
+       self.btn.on_press = self.next
+ 
+       outer = BoxLayout(orientation='vertical', padding=8, spacing=8)
+       outer.add_widget(instr)
+       outer.add_widget(self.btn)
+ 
+       self.add_widget(outer)
+ 
+   def next(self):
+       self.manager.current = 'pulse2'
+ 
+class PulseScr2(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+ 
+       instr = Label(text=txt_test3)
+ 
+       line1 = BoxLayout(size_hint=(0.8, None), height='30sp')
+       lbl_result1 = Label(text='Результат:', halign='right')
+       self.in_result1 = TextInput(text='0', multiline=False)
+ 
+       line1.add_widget(lbl_result1)
+       line1.add_widget(self.in_result1)
+ 
+       line2 = BoxLayout(size_hint=(0.8, None), height='30sp')
+       lbl_result2 = Label(text='Результат после отдыха:', halign='right')
+       self.in_result2 = TextInput(text='0', multiline=False)
+ 
+       line2.add_widget(lbl_result2)
+       line2.add_widget(self.in_result2)
+ 
+       self.btn = Button(text='Завершить', size_hint=(0.3, 0.2), pos_hint={'center_x': 0.5})
+       self.btn.on_press = self.next
+ 
+       outer = BoxLayout(orientation='vertical', padding=8, spacing=8)
+       outer.add_widget(instr)
+       outer.add_widget(line1)
+       outer.add_widget(line2)
+       outer.add_widget(self.btn)
+ 
+       self.add_widget(outer)
+ 
+   def next(self):
+       global p2, p3
+       p2 = int(self.in_result1.text)
+       p3 = int(self.in_result2.text)
+       self.manager.current = 'result'
+ 
+class Result(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+ 
+       self.outer = BoxLayout(orientation='vertical', padding=8, spacing=8)
+       self.instr = Label(text = '')
+       self.outer.add_widget(self.instr)
+       self.btn = Button(text='Финал')
+       self.btn.on_press = self.next
+       self.outer.add_widget(self.btn)
+       self.add_widget(self.outer)
+       self.on_enter = self.before
+  
+   def before(self):
+       global name
+       self.instr.text = name + '\n' + test(p1, p2, p3, age)
 
-class FirstScr(Screen):
-    def __init__(self, name='first'):
-        super().__init__(name=name) # имя экрана должно передаваться конструктору класса Screen
-        btn = Button(text="Переключиться на другой экран")
-        btn.on_press = self.next
-        self.add_widget(btn) # экран - это виджет, на котором могут создаваться все другие (потомки)
+   def next(self):
+       self.manager.current = 'final'
 
-    def next(self):
-        self.manager.transition.direction = 'left' # объект класса Screen имеет свойство manager 
-                                                   # - это ссылка на родителя
-        self.manager.current = 'second'
 
-class SecondScr(Screen):
-    def __init__(self, name='second'):
-        super().__init__(name=name)
-        btn = Button(text="Вернись, вернись!")
-        btn.on_press = self.next
-        self.add_widget(btn)
-        
-    def next(self):
-        self.manager.transition.direction = 'right'
-        self.manager.current = 'first'
-
-class MyApp(App):
-    def build(self):
-        sm = ScreenManager()
-        sm.add_widget(FirstScr())
-        sm.add_widget(SecondScr())
-        # будет показан FirstScr, потому что он добавлен первым. Это можно поменять вот так:
-        # sm.current = 'second'
-        return sm
-
-app = MyApp()
+class Final(Screen):
+   def __init__(self, **kwargs):
+       super().__init__(**kwargs)
+       v1 = BoxLayout()
+       instr = Label(text='Cпасибо')
+       btn1 = Button(text='В начало')
+       v1.add_widget(instr)
+       v1.add_widget(btn1)
+       btn1.on_press = self.back
+       self.add_widget(v1)
+ 
+   def back(self):
+       self.manager.current = 'instr'
+ 
+class HeartCheck(App):
+   def build(self):
+       sm = ScreenManager()
+       sm.add_widget(InstrScr(name='instr'))
+       sm.add_widget(PulseScr(name='pulse1'))
+       sm.add_widget(CheckSits(name='sits'))
+       sm.add_widget(PulseScr2(name='pulse2'))
+       sm.add_widget(Result(name='result'))
+       sm.add_widget(Final(name='final'))
+       return sm
+ 
+app = HeartCheck()
 app.run()
-
 
 
