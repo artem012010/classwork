@@ -1,38 +1,38 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout
-from random import randint
- 
-app = QApplication([])
- 
-# главное окно:
-my_win = QWidget()
-my_win.setWindowTitle('Определитель победителя')
-my_win.move(100, 100)
-my_win.resize(400, 200)
-
-
-#виджеты окна: кнопка и надпись
-button = QPushButton('Сгенерировать')
-text = QLabel('Нажми, чтобы узнать победителя')
-winner = QLabel('?')
-
-
-#расположение виджетов
-line = QVBoxLayout()
-line.addWidget(text, alignment = Qt.AlignCenter)
-line.addWidget(winner, alignment = Qt.AlignCenter)
-line.addWidget(button, alignment = Qt.AlignCenter)
-my_win.setLayout(line)
- 
-#функция, которая генерирует и показывает число
-def show_winner():
-    number = randint(0, 99)
-    winner.setText(str(number))
-    text.setText('Победитель:')
- 
-#обработка нажатия на кнопку
-button.clicked.connect(show_winner)
-
-
-my_win.show()
-app.exec_()
+print('''1 - расскажи шутку 2 - аниме
+3 - купить сувениры 4 - сыграть в игру''')
+zapros = input('Введите цифру от 1 до 4')
+while zapros != 'off':
+    if zapros == '1':
+        print('Колобок повесился')
+    elif zapros == '2':
+        anime = input('Какой жанр вы предпочитаете')
+        if anime == 'боевик':
+            print('Семья Шпиона')
+        elif anime == 'сёнен':
+            print('Драгон бол/ Хелсинг / Наруто')
+        elif anime == 'хоррор':
+            print('Рыба/ Дзюнзи Ито')
+        elif anime == 'исекай':
+            print('Бродяги/ Overlord')
+        else:
+            print('Такого жанра у нас нет')
+    elif zapros == '3':
+        summa = int(input('Сколько у вас денег?'))
+        choice = input('1 - Фигурка Дэнжи (1000$) 2 - Меч Гатса (500$)')
+        if choice == '1':
+            print('Вы купили фигурку дэнжи у вас осталось', summa - 1000,'$')
+        if choice == '2':
+            print('Вы купили меч гатса у вас осталось', summa - 500,'$')
+    elif zapros == '4':
+        print('Вы зашли в игру угадай число у вас есть 3 попытки')
+        win_number = 666
+        for i in range(3):
+            num = int(input('Введи число'))
+            if num == win_number:
+                print('Вы победили')
+                break
+            else:
+                print('Попробуй еще раз')
+    else:
+        print('Извини я не могу распознать твой запрос')
+    zapros = input('Введите цифру от 1 до 4')
