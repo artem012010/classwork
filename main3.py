@@ -1,40 +1,27 @@
-height = int(input('Введите ваш рост:'))
-weight = int(input('Введите ваш вес:'))
-if (height - weight) > 100:
-    print('Ваш вес в норме. Может, по круассану с кремом?')
-else:
-    print('Попробуйте ягодный мусс. Он не причинит вред фигуре!')
+#Задание 1.1
+import pandas as pd
+df = pd.read_csv('GoogleApps.csv')
 
+# 1 Сколько всего приложений с категорией ('Category') 'BUSINESS'?
+print(df['Category'].value_counts())
+# 2 Чему равно соотношение количества приложений для подростков ('Teen') и для детей старше 10 ('Everyone 10+')?
+# Ответ запиши с точностью до сотых.
+temp = df['Content Rating'].value_counts()
+print('Соотношение:', round(temp['Teen'] / temp['Everyone 10+'], 2))
 
-age = int(input('Введите возраст:'))
-if age < 30:
-    print('Люди вашего возраста часто берут мороженое с фисташками')
-else:
-    print('Люди вашего возраста часто берут тёмный шоколад')
-print('Переходите к покупкам!')
+# 3.1 Чему равен средний рейтинг ('Rating') платных ('Paid') приложений?
+# Ответ запиши с точностью до сотых.
+temp = df.groupby(by = 'Type')['Rating'].mean()
+print(temp['Paid'])
 
+# 3.2 На сколько средний рейтинг ('Rating') бесплатных ('Free') приложений меньше среднего рейтинга платных ('Paid')?
+# Ответ запиши с точностью до сотых.
+print(round(temp['Paid'] - temp['Free'], 2))
 
+# 4 Чему равен минимальный и максимальный размер ('Size') приложений в категории ('Category') 'COMICS'?
+# Запиши ответы с точностью до сотых.
+print(df.groupby(by = 'Category')['Size'].agg(['min', 'max']))
 
-
-answer = input('Желаете изучить хиты продаж?')
-if answer == 'да':
-    category = input('Интересующая категория:')
-    if category == 'продукты':
-        print('Молоко 1л, Печенье с изюмом, Персики')
-    else:
-        print('Стиральный порошок, Щётка для обуви')
-else:
-    print('Дайте знать, если передумаете!')
-
-
-
-#поиск наибольшей цены из трёх
-price1 = int(input('Цена первого товара:'))
-price2 = int(input('Цена второго товара:'))
-price3 = int(input('Цена третьего товара:'))
-
-if price1 <= price2:
-    price1 = price2
-if price1 <= price3:
-    price1 = price3
-print('Акция! К оплате за три товара:', price1)
+# Бонус 1. Сколько приложений с рейтингом ('Rating') строго больше 4.5 в категории ('Category') 'FINANCE'?
+temp = df[df['Rating'] > 4.5]['Category'].value_counts()
+print(temp['FINANCE'])
