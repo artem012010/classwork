@@ -4,21 +4,26 @@ from PyQt5.QtWidgets import (
         QHBoxLayout, QVBoxLayout, 
         QGroupBox, QButtonGroup, QRadioButton,  
         QPushButton, QLabel)
-from random import shuffle
+from random import randint, shuffle 
 
 
 class Question():
+    ''' содержит вопрос, правильный ответ и три неправильных'''
     def __init__(self, question, right_answer, wrong1, wrong2, wrong3):
         self.question = question
         self.right_answer = right_answer
         self.wrong1 = wrong1
         self.wrong2 = wrong2
         self.wrong3 = wrong3
-    
+
+
 questions_list = [] 
-questions_list.append(Question('Государственный язык Бразилии', 'Португальский', 'Английский', 'Испанский', 'Бразильский'))
-questions_list.append(Question('Какого цвета нет на флаге России?', 'Зелёный', 'Красный', 'Белый', 'Синий'))
-questions_list.append(Question('Национальная хижина якутов', 'Ураса', 'Юрта', 'Иглу', 'Хата'))
+questions_list.append(
+        Question('Государственный язык Бразилии', 'Португальский', 'Английский', 'Испанский', 'Бразильский'))
+questions_list.append(
+        Question('Какого цвета нет на флаге России?', 'Зелёный', 'Красный', 'Белый', 'Синий'))
+questions_list.append(
+        Question('Национальная хижина якутов', 'Ураса', 'Юрта', 'Иглу', 'Хата'))
 
 
 app = QApplication([])
@@ -69,8 +74,6 @@ layout_res = QVBoxLayout()
 layout_res.addWidget(lb_Result, alignment=(Qt.AlignLeft | Qt.AlignTop))
 layout_res.addWidget(lb_Correct, alignment=Qt.AlignHCenter, stretch=2)
 AnsGroupBox.setLayout(layout_res)
-
-
 layout_line1 = QHBoxLayout() # вопрос
 layout_line2 = QHBoxLayout() # варианты ответов или результат теста
 layout_line3 = QHBoxLayout() # кнопка "Ответить"
@@ -96,8 +99,6 @@ layout_card.addStretch(1)
 layout_card.addLayout(layout_line3, stretch=1)
 layout_card.addStretch(1)
 layout_card.setSpacing(5) # пробелы между содержимым
-
-
 def show_result():
     ''' показать панель ответов '''
     RadioGroupBox.hide()
@@ -110,7 +111,6 @@ def show_question():
     RadioGroupBox.show()
     AnsGroupBox.hide()
     btn_OK.setText('Ответить')
-    # сбросить выбранную радио-кнопку
     RadioGroup.setExclusive(False) # сняли ограничения, чтобы можно было сбросить выбор радиокнопки
     rbtn_1.setChecked(False)
     rbtn_2.setChecked(False)
@@ -146,21 +146,26 @@ def check_answer():
     if answers[0].isChecked():
         # правильный ответ!
         show_correct('Правильно!')
+        window.score += 1
+        print('Статистика\n-Всего вопросов: ', window.total, '\n-Правильных ответов: ', window.score)
+        print('Рейтинг: ', (window.score/window.total*100), '%')
     else:
         if answers[1].isChecked() or answers[2].isChecked() or answers[3].isChecked():
             # неправильный ответ!
             show_correct('Неверно!')
+            print('Рейтинг: ', (window.score/window.total*100), '%')
+    
 
 
 def next_question():
-    ''' задает следующий вопрос из списка '''
-    # этой функции нужна переменная, в которой будет указываться номер текущего вопроса
-    # эту переменную можно сделать глобальной, либо же сделать свойством "глобального объекта" (app или window)
-    # мы заведем (ниже) свойство window.cur_question.
-    window.cur_question = window.cur_question + 1 # переходим к следующему вопросу
-    if window.cur_question >= len(questions_list):
-        window.cur_question = 0 # если список вопросов закончился - идем сначала
-    q = questions_list[window.cur_question] # взяли вопрос
+    ''' задает случайный вопрос из списка '''
+    window.total += 1
+    print('Статистика\n-Всего вопросов: ', window.total, '\n-Правильных ответов: ', window.score)
+    cur_question = randint(0, len(questions_list) - 1)  # нам не нужно старое значение, 
+                                                        # поэтому можно использовать локальную переменную! 
+            # случайно взяли вопрос в пределах списка
+            # если внести около сотни слов, то редко будет повторяться
+    q = questions_list[cur_question] # взяли вопрос
     ask(q) # спросили
 
 
@@ -175,16 +180,13 @@ def click_OK():
 window = QWidget()
 window.setLayout(layout_card)
 window.setWindowTitle('Memo Card')
-# текущий вопрос из списка сделаем свойством объекта "окно", так мы сможем спокойно менять его из функции:
-window.cur_question = -1    # по-хорошему такие переменные должны быть свойствами, 
-                            # только надо писать класс, экземпляры которого получат такие свойства, 
-                            # но python позволяет создать свойство у отдельно взятого экземпляра
 
 
 btn_OK.clicked.connect(click_OK) # по нажатии на кнопку выбираем, что конкретно происходит
 
 
-# все настроено, осталось задать вопрос и показать окно:
+window.score = 0
+window.total = 0
 next_question()
 window.resize(400, 300)
 window.show()
