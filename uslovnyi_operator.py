@@ -112,3 +112,66 @@ hideturtle()
 exitonclick()
 
 
+
+
+
+
+from turtle import *
+from time import sleep
+pensize(2)
+
+def light(x,y,col,on):
+    if on:
+        penup()
+        goto(x,y)
+        pendown()
+        color(col)
+        begin_fill()
+        circle(40)
+        end_fill()
+    else:
+        penup()
+        goto(x,y)
+        pendown()
+        color(col)
+        circle(40)
+
+def ramka():
+    color('black')
+    penup()
+    goto(-75,175)
+    pendown()
+    forward(150)
+    right(90)
+    forward(300)
+    right(90)
+    forward(150)
+    right(90)
+    forward(300)
+    right(90)
+
+
+while True:
+    ramka()
+    light(0,90,'red',True)
+    light(0,0,'yellow',False)
+    light(0,-90,'green',False)
+    sleep(3)
+    clear()
+    ramka()
+    light(0,90,'red',False)
+    light(0,0,'yellow',True)
+    light(0,-90,'green',False)
+    sleep(3)
+    clear()
+    ramka()
+    light(0,90,'red',False)
+    light(0,0,'yellow',False)
+    light(0,-90,'green',True)
+    sleep(3)
+    clear()
+
+hideturtle()
+exitonclick()
+
+
