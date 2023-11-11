@@ -75,6 +75,13 @@ class ImageProcessor():
         self.filename = filename
         fullname = os.path.join(workdir, filename)
         self.image = Image.open(fullname)
+        def showImage(self, path):
+        lb_image.hide()
+        pixmapimage = QPixmap(path)
+        w, h = lb_image.width(), lb_image.height()
+        pixmapimage = pixmapimage.scaled(w, h, Qt.KeepAspectRatio)
+        lb_image.setPixmap(pixmapimage)
+        lb_image.show()
 
 
 app.exec()
