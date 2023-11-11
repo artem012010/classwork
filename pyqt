@@ -83,5 +83,14 @@ class ImageProcessor():
         lb_image.setPixmap(pixmapimage)
         lb_image.show()
 
+def showChosenImage():
+    if lw_files.currentRow() >= 0:
+        filename = lw_files.currentItem().text() 
+        workimage.loadImage(filename)
+        workimage.showImage(os.path.join(workdir, workimage.filename)) 
+
+workimage = ImageProcessor() #текущая рабочая картинка для работы
+lw_files.currentRowChanged.connect(showChosenImage)
+
 
 app.exec()
