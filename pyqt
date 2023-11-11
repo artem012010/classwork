@@ -63,5 +63,18 @@ def showFilenamesList():
         lw_files.addItem(filename)
 btn_dir.clicked.connect(showFilenamesList)
 
+class ImageProcessor():
+    def __init__(self):
+        self.image = None
+        self.dir = None
+        self.filename = None
+        self.save_dir = "Modified/"
+
+    def loadImage(self, filename):
+        ''' при загрузке запоминаем путь и имя файла '''
+        self.filename = filename
+        fullname = os.path.join(workdir, filename)
+        self.image = Image.open(fullname)
+
 
 app.exec()
