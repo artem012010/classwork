@@ -16,6 +16,13 @@ def background(x,y,wid,hei,col):
     right(90)
     end_fill()
 
-background(-250,-100,500,100,'lightgreen')
-background(-250,500,500,600,'lightblue')
-exitonclick()
+def sun():
+    penup()
+    goto(170,100)
+    pendown()
+    color('yellow')
+    begin_fill()
+    for i in range(18):
+        forward(75)
+        left(100)
+    end_fill()
