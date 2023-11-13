@@ -1,6 +1,6 @@
 #Главный файл основная часть программы допустим main.py
 from turtle import *
-from gorod import *
+from 'Имя вашего модуля' import *
 
 speed(10)
 
