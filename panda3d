@@ -1,4 +1,4 @@
-#game.py
+Файл game.py
 from direct.showbase.ShowBase import ShowBase
 from mapmanager import Mapmanager
 
@@ -13,8 +13,7 @@ class Game(ShowBase):
 
 game = Game()
 game.run()
-
-#mapmanager.py
+Файл mapmanager.py
 class Mapmanager():
    """ Управление картой """
    def __init__(self):
@@ -54,5 +53,23 @@ class Mapmanager():
        self.block.reparentTo(self.land)
 
 
+   def clear(self):
+       """обнуляет карту"""
+       self.land.removeNode()
+       self.startNew()
 
+
+   def loadLand(self, filename):
+       """создаёт карту земли из текстового файла, возвращает её размеры"""
+       self.clear()
+       with open(filename) as file:
+           y = 0
+           for line in file:
+               x = 0
+               line = line.split(' ')
+               for z in line:
+                   for z0 in range(int(z)+1):
+                       block = self.addBlock((x, y, z0))
+                   x += 1
+               y += 1
 
