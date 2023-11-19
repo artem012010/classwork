@@ -41,6 +41,32 @@ class Enemy(GameSprite):
         else:
             self.rect.x += self.speed
 
+#класс для спрайтов-препятствий
+class Wall(sprite.Sprite):
+    def __init__(self, color_1, color_2, color_3, wall_x, wall_y, wall_width, wall_height):
+        super().__init__()
+        self.color_1 = color_1
+        self.color_2 = color_2
+        self.color_3 = color_3
+        self.width = wall_width
+        self.height = wall_height
+        # картинка стены - прямоугольник нужных размеров и цвета
+        self.image = Surface((self.width, self.height))
+        self.image.fill((color_1, color_2, color_3))
+        # каждый спрайт должен хранить свойство rect - прямоугольник
+        self.rect = self.image.get_rect()
+        self.rect.x = wall_x
+        self.rect.y = wall_y
+ 
+    def draw_wall(self):
+        window.blit(self.image, (self.rect.x, self.rect.y))
+        #draw.rect(window, (self.color_1, self.color_2, self.color_3), (self.rect.x, self.rect.y, self.width, self.height))
+
+
+w1 = Wall(154, 205, 50, 100, 20 , 450, 10)
+w2 = Wall(154, 205, 50, 100, 480, 350, 10)
+w3 = Wall(154, 205, 50, 100, 20 , 10, 380)
+
 
 #Игровая сцена:
 win_width = 700
@@ -77,6 +103,9 @@ while game:
    monster.update()
    player.reset()
    monster.reset()
+   w1.draw_wall()
+   w2.draw_wall()
+   w3.draw_wall()
 
 
    display.update()
