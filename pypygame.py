@@ -29,6 +29,18 @@ class Player(GameSprite):
         if keys[K_DOWN] and self.rect.y < win_height - 80:
             self.rect.y += self.speed
 
+#класс-наследник для спрайта-врага (перемещается сам)
+class Enemy(GameSprite):
+    def update(self):
+        if self.rect.x <= 470:
+            self.side = "right"
+        if self.rect.x >= win_width - 85:
+            self.side = "left"
+        if self.side == "left":
+            self.rect.x -= self.speed
+        else:
+            self.rect.x += self.speed
+
 
 #Игровая сцена:
 win_width = 700
@@ -40,7 +52,7 @@ background = transform.scale(image.load("background.jpg"), (win_width, win_heigh
 
 #Персонажи игры:
 player = Player('hero.png', 5, win_height - 80, 4)
-monster = GameSprite('cyborg.png', win_width - 80, 280, 2)
+monster = Enemy('cyborg.png', win_width - 80, 280, 2)
 final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
 
 
@@ -62,6 +74,7 @@ while game:
   
    window.blit(background,(0, 0))
    player.update()
+   monster.update()
    player.reset()
    monster.reset()
 
