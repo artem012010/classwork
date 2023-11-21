@@ -1,49 +1,41 @@
-#задание 1
-count = 0
-with open('my_file.txt','r') as file:
-   for string in file:            
-       string_list = string.split(' ')
-       for symbol in string_list:
-           if int(symbol) == 1:
-               count = count+1
-print(count)
+print('Привет я бот Олег')
+print('Я умею всякое')
+zapros = input('Что вас интересует?')
+while zapros.find('вык') == -1:
+    if zapros == 'шутка':
+        print('Русалка села на шпагат')
+    elif zapros == 'аниме':
+        genre = input('Введите жанр')
+        if genre == 'боевик':
+            print('Токийские мстители')
+        elif genre == 'романтика':
+            print('Сад изящных слов')
+        else:
+            print('не знаком с таким')
+    elif zapros == 'игра':
+        for i in range(3):
+            num = int(input('Введи число'))
+            if num == 7:
+                print('Вы победили')
+                break
+            else:
+                print('Попробуй еще раз')
+    elif zapros == 'купить' or zapros == 'шмот':
+        print('В нашем магазине есть')
+        print('Куртка - 7000 Шапка - 1000')
+        money = int(input('Сколько у вас денег'))
+        dress = input('Что вас заинтересовало')
+        if dress == 'куртка' and money >= 7000:
+            print('Вы купили куртку')
+            print('У вас осталось',money - 7000,'$')
+        elif dress == 'шапка' and money >= 1000:
+            print('Вы купили шапку')
+            print('У вас осталось',money - 1000,'$')
+        else:
+            print('У нас такого нет')
+    else:
+        print('Извини я тебя не понимаю')
+        print('Напиши шутка - аниме - игра - купить')
+    zapros = input('Что вас интересует?')
+print('Приятно было пообщаться')
 
-#задача 2
-with open('my_file.txt','r') as file:
-   lines = file.readlines()
-   second_line = lines[13].split(' ')
-   item = int(second_line[7])
-   print(item)
-
-#задача 3
-count = 0
-with open('my_file.txt','r') as file:
- lines = file.readlines()
- for i in range(len(lines)):
-     string_list = lines[i].split(' ')
-     for j in range(len(string_list)):
-          count = count + int(string_list[j])
-print(count)
-#задача 4
-count = 0
-with open('my_file.txt','r') as file:
-   lines = file.readlines()
-   for i in range(len(lines)):
-       string_list = lines[i].split(' ')
-       for j in range(len(string_list)):
-           if i == 2 or i == 5 or i == 8 or i ==11 :
-               count = count + int(string_list[j])
-print(count)
-#задача 5
-count = 0
-max_elem = 0
-with open('my_file.txt','r') as file:
-   lines = file.readlines()
-   for i in range(len(lines)):
-       string_list = lines[i].split(' ')
-       for j in range(len(string_list)):
-           if int(string_list[j]) > max_elem:
-               max_elem = int(string_list[j])
-       count = count + max_elem
-   max_elem = 0
-print(count)
