@@ -130,5 +130,20 @@ class Hero():
        else:
            self.cameraBind()
 
+   def turn_left(self):
+       self.hero.setH((self.hero.getH() + 5) % 360)
+
+
+   def turn_right(self):
+       self.hero.setH((self.hero.getH() - 5) % 360)
+
+   def accept_events(self):
+       base.accept(key_turn_left, self.turn_left)
+       base.accept(key_turn_left + '-repeat', self.turn_left)
+       base.accept(key_turn_right, self.turn_right)
+       base.accept(key_turn_right + '-repeat', self.turn_right)
+
+       base.accept(key_switch_camera, self.changeView)
+
 
   
