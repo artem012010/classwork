@@ -2,6 +2,7 @@ from turtle import *
 
 sergey = Turtle()
 sergey.shape('circle')
+sergey.size = 0
 
 def draw(x,y):
     sergey.goto(x,y)
@@ -26,6 +27,23 @@ def goRight():
 def goLeft():
     sergey.goto(sergey.xcor() - 5,sergey.ycor())
 
+def beginFill():
+    sergey.begin_fill()
+
+def endFill():
+    sergey.end_fill()
+
+def cClear():
+    sergey.clear()
+
+def penMinus():
+    sergey.size -= 1
+    sergey.pensize(sergey.size)
+
+def penPlus():
+    sergey.size += 1
+    sergey.pensize(sergey.size)
+
 sergey.ondrag(draw)
 screen = sergey.getscreen()
 screen.listen()
@@ -36,3 +54,8 @@ screen.onkey(goUp,'Up')
 screen.onkey(goDown,'Down')
 screen.onkey(goRight,'Right')
 screen.onkey(goLeft,'Left')
+screen.onkey(beginFill,'q')
+screen.onkey(endFill,'e')
+screen.onkey(cClear,'c')
+screen.onkey(penPlus,'i')
+screen.onkey(penMinus,'o')
