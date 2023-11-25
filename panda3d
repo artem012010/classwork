@@ -241,5 +241,13 @@ class Hero():
        base.accept(key_right, self.right)
        base.accept(key_right + '-repeat', self.right)
 
+      
+       base.accept(key_switch_mode, self.changeMode)
+
+       base.accept(key_up, self.up)
+       base.accept(key_up + '-repeat', self.up)
+       base.accept(key_down, self.down)
+       base.accept(key_down + '-repeat', self.down)
+
 
        base.accept(key_switch_camera, self.changeView)
