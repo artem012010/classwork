@@ -1,4 +1,5 @@
 from pygame import *
+from random import randint
 
 #фоновая музыка
 mixer.init()
@@ -9,6 +10,7 @@ fire_sound = mixer.Sound('fire.ogg')
 # нам нужны такие картинки:
 img_back = "galaxy.jpg" # фон игры
 img_hero = "rocket.png" # герой
+img_enemy = "ufo.png" # враг
 
 # класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
