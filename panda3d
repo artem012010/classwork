@@ -53,8 +53,12 @@ class Mapmanager():
        self.block.setTexture(loader.loadTexture(self.texture))
        self.block.setPos(position)
        self.color = self.getColor(int(position[2]))
-       self.block.setColor(self.color
+       self.block.setColor(self.color)
+
+
        self.block.setTag("at", str(position))
+
+
        self.block.reparentTo(self.land)
 
 
@@ -63,7 +67,23 @@ class Mapmanager():
        self.land.removeNode()
        self.startNew()
 
-      def findBlocks(self, pos):
+
+   def loadLand(self, filename):
+       """создаёт карту земли из текстового файла, возвращает её размеры"""
+       self.clear()
+       with open(filename) as file:
+           y = 0
+           for line in file:
+               x = 0
+               line = line.split(' ')
+               for z in line:
+                   for z0 in range(int(z)+1):
+                       block = self.addBlock((x, y, z0))
+                   x += 1
+               y += 1
+       return x,y
+  
+   def findBlocks(self, pos):
        return self.land.findAllMatches("=at=" + str(pos))
 
 
@@ -82,25 +102,7 @@ class Mapmanager():
            z += 1
        return (x, y, z)
 
-
-   def loadLand(self, filename):
-       """создаёт карту земли из текстового файла, возвращает её размеры"""
-       self.clear()
-       with open(filename) as file:
-           y = 0
-           for line in file:
-               x = 0
-               line = line.split(' ')
-               for z in line:
-                   for z0 in range(int(z)+1):
-                       block = self.addBlock((x, y, z0))
-                   x += 1
-               y += 1
-       return x,y
-
-
 Файл hero.py
-
 
 key_switch_camera = 'c' # камера привязана к герою или нет
 key_switch_mode = 'z' # можно проходить сквозь препятствия или нет
@@ -324,4 +326,6 @@ class Hero():
        base.accept(key_down, self.down)
        base.accept(key_down + '-repeat', self.down)
 
-       base.accept(key_switch_camera, self.changeView)
+
+
+
