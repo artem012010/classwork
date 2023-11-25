@@ -43,6 +43,20 @@ class Player(GameSprite):
     def fire(self):
         pass
 
+# класс спрайта-врага   
+class Enemy(GameSprite):
+    # движение врага
+    def update(self):
+        self.rect.y += self.speed
+        global lost
+        # исчезает, если дойдет до края экрана
+        if self.rect.y > win_height:
+            self.rect.x = randint(80, win_width - 80)
+            self.rect.y = 0
+            lost = lost + 1
+
+
+
 # Создаем окошко
 win_width = 700
 win_height = 500
@@ -52,6 +66,11 @@ background = transform.scale(image.load(img_back), (win_width, win_height))
 
 # создаем спрайты
 ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
+
+monsters = sprite.Group()
+for i in range(1, 6):
+    monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
+    monsters.add(monster)
 
 # переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
 finish = False
@@ -69,9 +88,11 @@ while run:
 
         # производим движения спрайтов
         ship.update()
+        monsters.update()
 
         # обновляем их в новом местоположении при каждой итерации цикла
         ship.reset()
+        monsters.draw(window)
 
         display.update()
     # цикл срабатывает каждую 0.05 секунд
