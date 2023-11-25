@@ -53,7 +53,8 @@ class Mapmanager():
        self.block.setTexture(loader.loadTexture(self.texture))
        self.block.setPos(position)
        self.color = self.getColor(int(position[2]))
-       self.block.setColor(self.color)
+       self.block.setColor(self.color
+       self.block.setTag("at", str(position))
        self.block.reparentTo(self.land)
 
 
@@ -61,6 +62,25 @@ class Mapmanager():
        """обнуляет карту"""
        self.land.removeNode()
        self.startNew()
+
+      def findBlocks(self, pos):
+       return self.land.findAllMatches("=at=" + str(pos))
+
+
+   def isEmpty(self, pos):
+       blocks = self.findBlocks(pos)
+       if blocks:
+           return False
+       else:
+           return True
+
+
+   def findHighestEmpty(self, pos):
+       x, y, z = pos
+       z = 1
+       while not self.isEmpty((x, y, z)):
+           z += 1
+       return (x, y, z)
 
 
    def loadLand(self, filename):
@@ -98,6 +118,10 @@ key_turn_left = 'n'     # поворот камеры направо (а мир�
 key_turn_right = 'm'    # поворот камеры налево (а мира - направо)
 
 
+key_build = 'b'     # построить блок перед собой
+key_destroy = 'v'   # разрушить блок перед собой
+
+
 class Hero():
    def __init__(self, pos, land):
        self.land = land
@@ -105,6 +129,7 @@ class Hero():
        self.hero = loader.loadModel('smiley')
        self.hero.setColor(1, 0.5, 0)
        self.hero.setScale(0.3)
+       self.hero.setH(180)
        self.hero.setPos(pos)
        self.hero.reparentTo(render)
        self.cameraBind()
@@ -127,8 +152,6 @@ class Hero():
        self.cameraOn = False
 
 
-
-
    def changeView(self):
        if self.cameraOn:
            self.cameraUp()
@@ -149,26 +172,28 @@ class Hero():
        если он делает шаг в направлении angle'''
 
 
-       x_from = round(self.hero.getX())
+       x_from = round(self.hero.getX()) 
        y_from = round(self.hero.getY())
        z_from = round(self.hero.getZ())
 
 
        dx, dy = self.check_dir(angle)
-       x_to = x_from + dx
+       x_to = x_from + dx 
        y_to = y_from + dy
        return x_to, y_to, z_from
 
 
    def just_move(self, angle):
        '''перемещается в нужные координаты в любом случае'''
-       pos = self.look_at(angle)
+       pos = self.look_at(angle) 
        self.hero.setPos(pos)
 
 
    def move_to(self, angle):
        if self.mode:
            self.just_move(angle)
+       else:
+           self.try_move(angle)
   
    def check_dir(self,angle):
        ''' возвращает округленные изменения координат X, Y,
@@ -224,6 +249,27 @@ class Hero():
        angle = (self.hero.getH() + 270) % 360
        self.move_to(angle)
 
+
+   def changeMode(self):
+       if self.mode:
+           self.mode = False
+       else:
+           self.mode = True
+  
+   def try_move(self, angle):
+       '''перемещается, если может'''
+       pos = self.look_at(angle)
+       if self.land.isEmpty(pos):
+           # перед нами свободно. Возможно, надо упасть вниз:
+           pos = self.land.findHighestEmpty(pos)
+           self.hero.setPos(pos)
+       else:
+           # перед нами занято. Если получится, заберёмся на этот блок:
+           pos = pos[0], pos[1], pos[2] + 1
+           if self.land.isEmpty(pos):
+               self.hero.setPos(pos)
+               # не получится забраться - стоим на месте
+
    def up(self):
        if self.mode:
            self.hero.setZ(self.hero.getZ() + 1)
@@ -231,6 +277,25 @@ class Hero():
    def down(self):
        if self.mode and self.hero.getZ() > 1:
            self.hero.setZ(self.hero.getZ() - 1)
+  
+
+  
+   def build(self):
+       angle = self.hero.getH() % 360
+       pos = self.look_at(angle)
+       if self.mode:
+           self.land.addBlock(pos)
+       else:
+           self.land.buildBlock(pos)
+
+
+   def destroy(self):
+       angle = self.hero.getH() % 360
+       pos = self.look_at(angle)
+       if self.mode:
+           self.land.delBlock(pos)
+       else:
+           self.land.delBlockFrom(pos)
 
 
    def accept_events(self):
@@ -249,13 +314,14 @@ class Hero():
        base.accept(key_right, self.right)
        base.accept(key_right + '-repeat', self.right)
 
-      
+
+       base.accept(key_switch_camera, self.changeView)
+
        base.accept(key_switch_mode, self.changeMode)
 
        base.accept(key_up, self.up)
        base.accept(key_up + '-repeat', self.up)
        base.accept(key_down, self.down)
        base.accept(key_down + '-repeat', self.down)
-
 
        base.accept(key_switch_camera, self.changeView)
