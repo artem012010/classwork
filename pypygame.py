@@ -9,15 +9,20 @@ fire_sound = mixer.Sound('fire.ogg')
 
 #шрифты и надписи
 font.init()
+font1 = font.Font(None, 80)
+win = font1.render('YOU WIN!', True, (255, 255, 255))
+lose = font1.render('YOU LOSE!', True, (180, 0, 0))
 font2 = font.Font(None, 36)
 
 # нам нужны такие картинки:
 img_back = "galaxy.jpg" # фон игры
 img_hero = "rocket.png" # герой
+img_bullet = "bullet.png" # пуля
 img_enemy = "ufo.png" # враг
 
 score = 0 # сбито кораблей
 lost = 0 # пропущено кораблей
+max_lost = 3 # проиграли, если пропустили столько
 
 # класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
@@ -50,7 +55,8 @@ class Player(GameSprite):
             self.rect.x += self.speed
   # метод "выстрел" (используем место игрока, чтобы создать там пулю)
     def fire(self):
-        pass
+        bullet = Bullet(img_bullet, self.rect.centerx, self.rect.top, 15, 20, -15)
+        bullets.add(bullet)
 
 # класс спрайта-врага   
 class Enemy(GameSprite):
@@ -64,6 +70,14 @@ class Enemy(GameSprite):
             self.rect.y = 0
             lost = lost + 1
 
+# класс спрайта-пули   
+class Bullet(GameSprite):
+    # движение врага
+    def update(self):
+        self.rect.y += self.speed
+        # исчезает, если дойдет до края экрана
+        if self.rect.y < 0:
+            self.kill()
 
 # Создаем окошко
 win_width = 700
@@ -80,6 +94,8 @@ for i in range(1, 6):
     monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
     monsters.add(monster)
 
+bullets = sprite.Group()
+
 # переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
 finish = False
 # Основной цикл игры:
@@ -89,6 +105,11 @@ while run:
     for e in event.get():
         if e.type == QUIT:
             run = False
+        # событие нажатия на пробел - спрайт стреляет
+        elif e.type == KEYDOWN:
+            if e.key == K_SPACE:
+                fire_sound.play()
+                ship.fire()
 
     if not finish:
         # обновляем фон
@@ -104,10 +125,12 @@ while run:
         # производим движения спрайтов
         ship.update()
         monsters.update()
+        bullets.update()
 
         # обновляем их в новом местоположении при каждой итерации цикла
         ship.reset()
         monsters.draw(window)
+        bullets.draw(window)
 
         display.update()
     # цикл срабатывает каждую 0.05 секунд
