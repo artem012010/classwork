@@ -7,10 +7,17 @@ mixer.music.load('space.ogg')
 mixer.music.play()
 fire_sound = mixer.Sound('fire.ogg')
 
+#шрифты и надписи
+font.init()
+font2 = font.Font(None, 36)
+
 # нам нужны такие картинки:
 img_back = "galaxy.jpg" # фон игры
 img_hero = "rocket.png" # герой
 img_enemy = "ufo.png" # враг
+
+score = 0 # сбито кораблей
+lost = 0 # пропущено кораблей
 
 # класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
@@ -58,7 +65,6 @@ class Enemy(GameSprite):
             lost = lost + 1
 
 
-
 # Создаем окошко
 win_width = 700
 win_height = 500
@@ -87,6 +93,13 @@ while run:
     if not finish:
         # обновляем фон
         window.blit(background,(0,0))
+
+        # пишем текст на экране
+        text = font2.render("Счет: " + str(score), 1, (255, 255, 255))
+        window.blit(text, (10, 20))
+
+        text_lose = font2.render("Пропущено: " + str(lost), 1, (255, 255, 255))
+        window.blit(text_lose, (10, 50))
 
         # производим движения спрайтов
         ship.update()
