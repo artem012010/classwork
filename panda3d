@@ -1,24 +1,20 @@
 Файл game.py
 from direct.showbase.ShowBase import ShowBase
 from mapmanager import Mapmanager
-from hero import Hero
 
 
 class Game(ShowBase):
    def __init__(self):
        ShowBase.__init__(self)
        self.land = Mapmanager()
-       x,y = self.land.loadLand("land.txt")
-       self.hero = Hero((x//2,y//2,2),self.land)
+       self.land.loadLand("land.txt")
        base.camLens.setFov(90)
 
 
 game = Game()
 game.run()
-
-
 Файл mapmanager.py
-
+import pickle
 class Mapmanager():
    """ Управление картой """
    def __init__(self):
@@ -103,6 +99,7 @@ class Mapmanager():
            z += 1
        return (x, y, z)
 
+
    def buildBlock(self, pos):
        """Ставим блок с учётом гравитации: """
        x, y, z = pos
@@ -110,11 +107,13 @@ class Mapmanager():
        if new[2] <= z + 1:
            self.addBlock(new)
 
+
    def delBlock(self, position):
        """удаляет блоки в указанной позиции """
        blocks = self.findBlocks(position)
        for block in blocks:
            block.removeNode()
+
 
    def delBlockFrom(self, position):
        x, y, z = self.findHighestEmpty(position)
@@ -122,35 +121,50 @@ class Mapmanager():
        for block in self.findBlocks(pos):
                block.removeNode()
 
-   
-    def saveMap(self):
-        blocks = self.land.getChildren()
-        # открываем бинарный файл на запись
-        with open('my_map.dat', 'wb') as fout:
-            # сохраняем в начало файла количество блоков
-            pickle.dump(len(blocks), fout)
-            # обходим все блоки
-            for block in blocks:
-                # сохраняем позицию
-                x, y, z = block.getPos()
-                pos = (int(x), int(y), int(z))
-                pickle.dump(pos, fout)
 
-    def loadMap(self):
-        # удаляем все блоки
-        self.clear()
-        # открываем бинарный файл на чтение
-        with open('my_map.dat', 'rb') as fin:
-            # считываем количество блоков
-            length = pickle.load(fin)
-            for i in range(length):
-                # считываем позицию
-                pos = pickle.load(fin)
-                # создаём новый блок
-                self.addBlock(pos)
+   def saveMap(self):
+       """сохраняет все блоки, включая постройки, в бинарный файл"""
 
 
+       """возвращает коллекцию NodePath для всех существующих в карте мира блоков"""
+       blocks = self.land.getChildren()
+       # открываем бинарный файл на запись
+       with open('my_map.dat', 'wb') as fout:
+
+
+           # сохраняем в начало файла количество блоков
+           pickle.dump(len(blocks), fout)
+
+
+           # обходим все блоки
+           for block in blocks:
+               # сохраняем позицию
+               x, y, z = block.getPos()
+               pos = (int(x), int(y), int(z))
+               pickle.dump(pos, fout)
+
+
+   def loadMap(self):
+       # удаляем все блоки
+       self.clear()
+
+
+       # открываем бинарный файл на чтение
+       with open('my_map.dat', 'rb') as fin:
+          
+           # считываем количество блоков
+           length = pickle.load(fin)
+
+
+           for i in range(length):
+               # считываем позицию
+               pos = pickle.load(fin)
+
+
+               # создаём новый блок
+               self.addBlock(pos)
 Файл hero.py
+
 
 key_switch_camera = 'c' # камера привязана к герою или нет
 key_switch_mode = 'z' # можно проходить сквозь препятствия или нет
@@ -170,6 +184,7 @@ key_turn_right = 'm'    # поворот камеры налево (а мира 
 
 key_build = 'b'     # построить блок перед собой
 key_destroy = 'v'   # разрушить блок перед собой
+
 
 key_savemap = 'k'
 key_loadmap = 'l'
@@ -191,7 +206,7 @@ class Hero():
 
    def cameraBind(self):
        base.disableMouse()
-       base.camera.setH(180)
+       # base.camera.setH(180)
        base.camera.reparentTo(self.hero)
        base.camera.setPos(0, 0, 1.5)
        self.cameraOn = True
@@ -203,6 +218,8 @@ class Hero():
        base.camera.reparentTo(render)
        base.enableMouse()
        self.cameraOn = False
+
+
 
 
    def changeView(self):
@@ -225,20 +242,20 @@ class Hero():
        если он делает шаг в направлении angle'''
 
 
-       x_from = round(self.hero.getX()) 
+       x_from = round(self.hero.getX())
        y_from = round(self.hero.getY())
        z_from = round(self.hero.getZ())
 
 
        dx, dy = self.check_dir(angle)
-       x_to = x_from + dx 
+       x_to = x_from + dx
        y_to = y_from + dy
        return x_to, y_to, z_from
 
 
    def just_move(self, angle):
        '''перемещается в нужные координаты в любом случае'''
-       pos = self.look_at(angle) 
+       pos = self.look_at(angle)
        self.hero.setPos(pos)
 
 
@@ -308,6 +325,8 @@ class Hero():
            self.mode = False
        else:
            self.mode = True
+
+
   
    def try_move(self, angle):
        '''перемещается, если может'''
@@ -322,17 +341,15 @@ class Hero():
            if self.land.isEmpty(pos):
                self.hero.setPos(pos)
                # не получится забраться - стоим на месте
-
    def up(self):
        if self.mode:
            self.hero.setZ(self.hero.getZ() + 1)
+
 
    def down(self):
        if self.mode and self.hero.getZ() > 1:
            self.hero.setZ(self.hero.getZ() - 1)
   
-
-
    def build(self):
        angle = self.hero.getH() % 360
        pos = self.look_at(angle)
@@ -341,6 +358,7 @@ class Hero():
        else:
            self.land.buildBlock(pos)
 
+
    def destroy(self):
        angle = self.hero.getH() % 360
        pos = self.look_at(angle)
@@ -348,6 +366,8 @@ class Hero():
            self.land.delBlock(pos)
        else:
            self.land.delBlockFrom(pos)
+
+
 
 
    def accept_events(self):
@@ -369,7 +389,9 @@ class Hero():
 
        base.accept(key_switch_camera, self.changeView)
 
+
        base.accept(key_switch_mode, self.changeMode)
+
 
        base.accept(key_up, self.up)
        base.accept(key_up + '-repeat', self.up)
@@ -377,14 +399,9 @@ class Hero():
        base.accept(key_down + '-repeat', self.down)
 
 
-
        base.accept(key_build, self.build)
        base.accept(key_destroy, self.destroy)
 
+
        base.accept(key_savemap, self.land.saveMap)
        base.accept(key_loadmap, self.land.loadMap)
-
-       
-
-
-
