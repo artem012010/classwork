@@ -1,4 +1,5 @@
 from random import *
+from time import *
 
 class Hero():
     def __init__(self,name,hp,power,weapon):
@@ -6,6 +7,8 @@ class Hero():
         self.hp = hp
         self.power = power
         self.weapon = weapon
+    
+        
 
     def info(self):
         print('Имя персонажа:',self.name)
@@ -18,8 +21,18 @@ class Hero():
         enemy.hp = enemy.hp - randint(self.power-5,self.power+5)
         print('Теперь он составляет',enemy.hp,'\n')
 
-
-hero = Hero('Артур',100,10,'меч')
-dragon = Hero('Смауг',200,30,'пламя')
-hero.strike(dragon)
-dragon.strike(hero)
+    def fight(self,enemy):
+        while True:
+            self.strike(enemy)
+            sleep(2)
+            enemy.strike(self)
+            sleep(2)
+            if enemy.hp < 0 and self.hp < 0 :
+                print('В бою пали оба')
+                break
+            if enemy.hp < 0:
+                print(enemy.name,'Проиграл сражение')
+                break
+            if self.hp < 0:
+                print(self.name,'Потерпел порожение')
+                break
