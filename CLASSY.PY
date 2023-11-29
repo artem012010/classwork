@@ -1,3 +1,5 @@
+#Создайте модуль и запомните его имя например game
+
 from random import *
 from time import *
 
@@ -33,6 +35,42 @@ class Hero():
                 print(self.name,'проиграл бой')
                 break
 
+
+#файл второй с сюжетом нашего квеста
+
+from game import *
+
+print('Доблестный рыцарь отправился в путешествие за сокровищами \n')
+sleep(1)
 hero = Hero('Артур',100,30,'меч')
-goblin = Hero('Вася',60,15,'камень')
-hero.fight(goblin)
+hero.info()
+print('Наш рыцарь натыкается на логово гоблин \n')
+sleep(1)
+otvet = input('Хотите сразиться? \n')
+if otvet == 'да':
+    goblin = Hero('Эдик',80,20,'лук')
+    goblin.info()
+    print('\n')
+    sleep(1)
+    hero.fight(goblin)
+    if goblin.hp < 0:
+        hero.hp = 100
+        hero.power *= 2
+        print('Наш рыцарь стал сильнее')
+        print('Теперь уровень его здоровья и атаки равен')
+        print(hero.hp,'/',hero.power)
+
+
+print('Мы наконец то достигли пещеры дракона \n')
+sleep(1)
+print('Да начнется битва \n')
+sleep(1)
+dragon = Hero('Смауг',150,40,'пламя')
+dragon.info()
+print('\n')
+hero.fight(dragon)
+if dragon.hp < 0:
+    print('Вы забрали сокровище ПОЗДРОВЛЯЕМ!!!!')
+else:
+    print('Вы погибли как настоящий рыцарь')
+
