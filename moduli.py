@@ -9,3 +9,14 @@ while True:
         break
 
 print('Прошло', round(end - start,2),'c')
+
+
+from time import sleep
+
+max_count = int(input('Введите количество секунд:')) 
+while max_count >= 0:
+    print('До конца света осталось:',max_count, 'c')
+    max_count -= 1 
+    sleep(1)
+
+print('BOOM')
