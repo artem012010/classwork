@@ -28,11 +28,28 @@ class Sprite(Turtle):
         else:
             return False
 
+    #Правила движения
+    def move_set(self,start_x,start_y,end_x,end_y):
+        self.start_x = start_x
+        self.start_y = start_y
+        self.end_x = end_x
+        self.end_y = end_y
+        self.goto(start_x,start_y)
+        self.setheading(self.towards(end_x,end_y))
+
+    #Движение врагов
+    def make_step(self):
+        self.forward(self.step)
+        if self.distance(self.end_x,self.end_y) < self.step:
+            self.move_set(self.end_x,self.end_y,self.start_x,self.start_y)
+
 # Создаем персонажей
 player = Sprite(0,-100,10,'circle','black')
 gold = Sprite(0,80,0,'triangle','gold')
-enemy1 = Sprite(-50,30,0,'turtle','red')
-enemy2 = Sprite(50,-30,0,'turtle','red')
+enemy1 = Sprite(-50,30,5,'turtle','red')
+enemy2 = Sprite(50,-30,5,'turtle','red')
+enemy1.move_set(-100,30,100,30)
+enemy2.move_set(100,-30,-100,-30)
 
 screen = player.getscreen() # Создаем обьект экрана
 screen.listen() # Просим экран слушать клавиши
@@ -45,6 +62,9 @@ screen.onkey(player.move_left,'Left')
 point = 0
 
 while point < 3:
+
+    enemy1.make_step()
+    enemy2.make_step()
 
     if player.is_collide(gold):
         point += 1
