@@ -6,7 +6,6 @@ tsize = 20
 s_width = 200
 s_height = 180
 
-
 class Sprite(Turtle):
    def __init__(self, x, y, step=10, shape='circle', color='black'):
        Turtle.__init__(self)
@@ -17,7 +16,6 @@ class Sprite(Turtle):
        self.shape(shape)
        self.step = step
        self.points = 0
-
 
    def move_up(self):
        self.goto(self.xcor(), self.ycor() + self.step)
@@ -36,21 +34,18 @@ class Sprite(Turtle):
        else:
            return False
 
-
    def set_move(self, x_start, y_start, x_end, y_end):
        self.x_start = x_start
        self.y_start = y_start       
        self.x_end = x_end
        self.y_end = y_end
        self.goto(x_start, y_start)
-       self.setheading(self.towards(x_end, y_end)) #направление
+       self.setheading(self.towards(x_end, y_end)) 
   
    def make_step(self):
-       self.forward(self.step) #направление уже есть
-
-
-       if self.distance(self.x_end, self.y_end) < self.step: #если расстояние меньше полушага
-           self.set_move(self.x_end, self.y_end, self.x_start, self.y_start) #меняем направление
+       self.forward(self.step) 
+       if self.distance(self.x_end, self.y_end) < self.step: 
+           self.set_move(self.x_end, self.y_end, self.x_start, self.y_start) 
 
 
 player = Sprite(0, -100, 10, 'circle', 'orange')
@@ -58,9 +53,8 @@ enemy1 = Sprite(-s_width, 0, 15, 'square', 'red')
 enemy1.set_move(-s_width, 0, s_width, 0)
 enemy2 = Sprite(s_width, 70, 15, 'square', 'red')
 enemy2.set_move(s_width, 70, -s_width, 70)
-goal = Sprite(0, 120, 20, 'triangle', 'green')
-#goal.set_move(-s_width, 120, s_width, 0)  
 
+goal = Sprite(0, 120, 20, 'triangle', 'green')
 
 total_score = 0
 
@@ -80,15 +74,22 @@ scr.onkey(player.move_down, 'Down')
 while total_score < 3:
    enemy1.make_step()
    enemy2.make_step()
-   #goal.make_step()
    if player.is_collide(goal):
        total_score += 1
        player.goto(0, -100)
    if player.is_collide(enemy1) or player.is_collide(enemy2):
        goal.hideturtle()
+       enemy1.hideturtle()
+       enemy2.hideturtle()
+       player.hideturtle()
+       enemy1.goto(-75,-25)
+       enemy1.write('Вы проиграли',font=('Arial',30,'normal'))
        break
-
 
 if total_score == 3:
    enemy1.hideturtle()
    enemy2.hideturtle()
+   goal.hideturtle()
+   player.hideturtle()
+   goal.goto(-75,-25)
+   goal.write('Вы победили',font=('Arial',30,'normal'))
