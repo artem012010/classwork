@@ -1,4 +1,19 @@
+# Код основной программы не важно как называется допустим zeus.py
 from time import *
+from analizator import *
+
+print('Вас приветствует спортивный центр ЗЕВС')
+start = time() 
+zapros = input('Что бы вы хотели узнать?')
+while zapros != 'выйти':
+    otvet(zapros)
+    zapros = input('Еще что нибудь (выйти - завершение)?')
+
+end = time() 
+print('Было приятно пообщаться вы пробыли с нами')
+print(int((end - start)/60),'минут')
+
+#Код модуля важно назвать как импорт из основной программы в моем случае analizator.py
 from random import randint
 
 def otvet(zapros):
@@ -30,15 +45,3 @@ def ugaday():
             break
         else:
             print('попробуй еще раз')
-
-
-print('Вас приветствует спортивный центр ЗЕВС')
-start = time() 
-zapros = input('Что бы вы хотели узнать?')
-while zapros != 'выйти':
-    otvet(zapros)
-    zapros = input('Еще что нибудь (выйти - завершение)?')
-
-end = time() 
-print('Было приятно пообщаться вы пробыли с нами')
-print(int((end - start)/60),'минут')
