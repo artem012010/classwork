@@ -57,6 +57,7 @@ def add_questions():
     conn.commit()
     close()
 
+
 def add_quiz():
     quizes = [
         ('Своя игра', ),
@@ -67,3 +68,61 @@ def add_quiz():
     cursor.executemany('''INSERT INTO quiz (name) VALUES (?)''', quizes)
     conn.commit()
     close()
+
+
+def add_links():
+    open()
+    cursor.execute('''PRAGMA foreign_keys=on''')
+    query = "INSERT INTO quiz_content (quiz_id, question_id) VALUES (?,?)"
+    answer = input("Добавить связь (y / n)?")
+    while answer != 'n':
+        quiz_id = int(input("id викторины: "))
+        question_id = int(input("id вопроса: "))
+        cursor.execute(query, [quiz_id, question_id])
+        conn.commit()
+        answer = input("Добавить связь (y / n)?")
+    close()
+
+
+def show(table):
+    query = 'SELECT * FROM ' + table
+    open()
+    cursor.execute(query)
+    print(cursor.fetchall())
+    close()
+
+
+def show_tables():
+    show('question')
+    show('quiz')
+    show('quiz_content')
+
+
+def get_question_after(question_id = 0, quiz_id=1):
+    ''' возвращает следующий вопрос после вопроса с переданным id
+    для первого вопроса передаётся значение по умолчанию '''
+    open()
+    query = '''
+    SELECT quiz_content.id, question.question, question.answer, question.wrong1, question.wrong2, question.wrong3
+    FROM question, quiz_content
+    WHERE quiz_content.question_id == question.id
+    AND quiz_content.id > ? AND quiz_content.quiz_id == ?
+    ORDER BY quiz_content.id '''
+    cursor.execute(query, [question_id, quiz_id] )
+    result = cursor.fetchone()
+    close()
+    return result
+
+
+def main():
+    clear_db()
+    create()
+    add_questions()
+    add_quiz()
+    #add_links()
+    show_tables()
+    #print(get_question_after(3, 1))
+
+
+
+main()
