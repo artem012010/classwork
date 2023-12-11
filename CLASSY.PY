@@ -24,11 +24,21 @@ class Card():
         window.blit(self.text,(self.rectangle.x + 10,self.rectangle.y + 30))
 
 question_card = Card(20,150,400,100)
-question_card.set_text('Почему небо голубое')
+question_card.set_text('Вопрос')
 
+answer_card = Card(20,300,400,100)
+answer_card.set_text('Ответ')
 
-        
 while True:
     pygame.display.update()
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                question_card.set_text('Почему небо голубое')
+
+            if event.key == pygame.K_a:
+                answer_card.set_text('Потому - что')
+
     question_card.draw()
+    answer_card.draw()
     clock.tick(30)
