@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 pygame.init()
 
 # Цвета для игры
@@ -34,10 +35,18 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
-                question_card.set_text('Почему небо голубое')
+                num = randint(1,2)
+                if num == 1:
+                    question_card.set_text('Почему небо голубое')
+                if num == 2:
+                    question_card.set_text('Почему он а не я?')
 
             if event.key == pygame.K_a:
-                answer_card.set_text('Потому - что')
+                num = randint(1,2)
+                if num == 1:
+                    answer_card.set_text('Потому - что')
+                if num == 2:
+                    answer_card.set_text('Прост')
 
     question_card.draw()
     answer_card.draw()
