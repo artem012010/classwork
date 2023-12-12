@@ -12,3 +12,12 @@ def close():
 def do(query):
     cursor.execute(query)
     conn.commit()
+def clear_db():
+    open()
+    query = '''DROP TABLE IF EXISTS quiz_content'''
+    do(query)
+    query = '''DROP TABLE IF EXISTS question'''
+    do(query)
+    query = '''DROP TABLE IF EXISTS quiz'''
+    do(query)
+    close()
