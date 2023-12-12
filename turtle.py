@@ -50,6 +50,9 @@ circle(50)
 
 exitonclick()
 
+
+from turtle import *
+ 
 def ship():
   color('light blue')
   pensize(5)
@@ -71,4 +74,42 @@ def ship():
   forward(50)
   left(180-45)
   forward(105)
+    
+ 
+#отрисовка волны, не менять
+penup()
+goto(-110,-25)
+pendown()
+color("blue")
+pensize(2)
+left(45)
+speed(0)
+i=0
+while i<20:
+   forward(10)
+   right(90)
+   forward(10)
+   left(90)
+   i=i+1
+right(45)
+ 
+#отрисовка кораблика
+penup()
+goto(0,-30)
+pendown()
+ship() 
+
+right(180)
+penup()
+goto(-130,130)
+pendown()
+ship()
+
+right(180)
+penup()
+goto(130,130)
+pendown()
+ship()
+
+exitonclick()
 
