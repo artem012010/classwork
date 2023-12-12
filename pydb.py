@@ -55,3 +55,15 @@ def add_questions():
     cursor.executemany('''INSERT INTO question (question, answer, wrong1, wrong2, wrong3) VALUES (?,?,?,?,?)''', questions)
     conn.commit()
     close()
+
+
+def add_quiz():
+    quizes = [
+        ('Своя игра', ),
+        ('Кто хочет стать миллионером?', ),
+        ('Самый умный', )
+    ]
+    open()
+    cursor.executemany('''INSERT INTO quiz (name) VALUES (?)''', quizes)
+    conn.commit()
+    close()
