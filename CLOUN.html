@@ -1,54 +1,25 @@
+<!DOCTYPE html>
 <html>
-    <title>Виталя</title>
-    <body>
-        <header style="border:3px solid black;padding:5px">
-            <img src="https://upload.wikimedia.org/wikipedia/ru/c/cf/%D0%9B%D0%BE%D0%B1%D0%BE%D1%81_%D0%A3%D0%9F%D0%9D%D0%A4%D0%9C_%28%D0%BB%D0%BE%D0%B3%D0%BE%29.png" width="50px">
-            <a href="#price"> Прайс лист</a>
-            <a href="#enemy"> Враги </a>
-        </header>
-        <main>
-            <h1 style="text-align:center">НЕГОР ВИТАЛЯ</h1>
-            <h2 style="text-align:center">Стильный модный молодежный <br>  <img src="https://otvet.imgsmail.ru/download/10332826_6b444acd3ff492feeb6cc9f44006c5be_800.jpg" width="300px"></h2>
-            <p style="font-size:20px">
-Хотите быть таким же классным? <br>
-1.Вам надо быть черным <br>
-2.Сменить имя на Виталю <br>
-3.Любить маму 
-            </p>
-        <h3>Виталя стоит на страже вашей безопасности</h3>
-        <p style="font-size:20px">Каждый день Виталя сражается со страшными чудищами <br> Он спасет вас от любой угрозы <br> Вы можете спать спокойно когда такой герой живет на вашей планете</p>
-        <h2 id="enemy" style="text-align:center">Враги Витали <br>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbPY8F2eA876Im2g36li07aN4Fwhc4zqNvvQ&usqp=CAU" width="200px" height="200px">
-    <img src="https://spb.hse.ru/data/2020/12/21/1343649231/%D0%93%D0%B8%D1%82%D0%BB%D0%B5%D1%80%20%D0%B8%20%D0%BD%D0%B0%D1%86%D0%B8%D1%81%D1%82%D1%8B.png" width="200px" height="200px">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Ronaldo_2002_cropped.jpg/233px-Ronaldo_2002_cropped.jpg" width="200px" height="200px">
-        </h2>
-        <h2 id="price"> Прайс Лист </h2>
-        <table style="border:1px solid black;border-collapse:collapse;font-size:20px">
-            <tr>
-                <td style="border:1px solid black">Услуга</td>
-                <td style="border:1px solid black">Длительность</td>
-                <td style="border:1px solid black">Цена</td>
-            </tr>
-            <tr>
-                <td style="border:1px solid black">Чистка Снега</td>
-                <td style="border:1px solid black">1ч</td>
-                <td style="border:1px solid black">500$</td>
-            </tr>
-            <tr>
-                <td style="border:1px solid black">Программирование</td>
-                <td style="border:1px solid black">30д</td>
-                <td style="border:1px solid black">20$</td>
-            </tr>
-            <tr>
-                <td style="border:1px solid black">Кариес</td>
-                <td style="border:1px solid black">1 зуб</td>
-                <td style="border:1px solid black">220$</td>
-            </tr>
-        </table>
-        </main>
-        <footer style="background:black;padding:5px;margin-top:30px">
-            <p style="background:white;padding:10px">Найти меня можно в пещере</p>
-            <p style="background:white;padding:10px">+999 999 999</p>
-        </footer>
-    </body>
+ <head>
+  <title>Анкета</title>
+ </head>
+ <body>
+  <form method="post" action="program">
+    <p><h2>Заполните анкету:</h2>
+    <p><b>Ваше имя:</b>       
+    <input type="text" maxlength="25" size="25" ></p>
+    <p><b>Ваша фамилия:</b>       
+    <input type="text" maxlength="25" size="25" ></p>
+    <p><b>Ваш возраст:</b>      
+    <input type="number" name="age" value="10" min="10" max="18" step="1"></p>
+    <p><b>Выберите курсы, которые Вас интересуют:</b>           
+    <p><input type="checkbox" name="course" value="Scratch"> Scratch</p>
+    <p><input type="checkbox" name="course" value="Gamedesign"> Gamedesign</p>
+    <p><input type="checkbox" name="course" value="Python Start"> Python Start</p>
+    <p><input type="checkbox" name="course" value="Python Pro">Python Pro</p>  
+    <p><b>Дополнительный комментарий:</b>
+    <textarea name="comment"></textarea></p>
+    <p><input type="submit" value="Отправить"></p>
+  </form>
+</body>
 </html>
