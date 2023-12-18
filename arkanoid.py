@@ -25,7 +25,7 @@ platform = Picture('platform.png', 200, 300, 100, 30)
 
 monsters = []
 count = 9
-for j in range(3):
+for j in range(1):
     y = 5 + (55 * j)
     x = 5 + (27.5 * j)
     for i in range (count):
@@ -39,7 +39,9 @@ clock = pygame.time.Clock()
 ball_speedx = 3
 ball_speedy = 3
 
-while True:
+game = True
+
+while game:
     ball.fill()
     platform.fill()
 
@@ -60,8 +62,21 @@ while True:
             if event.key == pygame.K_LEFT:
                 platform.rect.x -= 20
 
+    if ball.rect.y > 350:
+        lose = pygame.font.Font(None, 100).render('Ты проиграл', True, (255,0,0))
+        window.blit(lose,(100,200))
+        game = False
+    if len(monsters) == 0:
+        win = pygame.font.Font(None, 100).render('Ты победил', True, (0,255,0))
+        window.blit(win,(100,200))
+        game = False
+    
     for monster in monsters:
         monster.draw()
+        if monster.rect.colliderect(ball.rect):
+            monsters.remove(monster)
+            monster.fill()
+            ball_speedy *= -1
 
     platform.draw()
     ball.draw()
