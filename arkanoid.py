@@ -23,11 +23,26 @@ class Picture():
 ball = Picture('ball.png', 160, 200, 50, 50)
 platform = Picture('platform.png', 200, 300, 100, 30)
 
+monsters = []
+count = 9
+for j in range(5):
+    y = 5 + (55 * j)
+    x = 5 + (27.5 * j)
+    for i in range (count):
+        m = Picture('enemy.png',x, y, 50, 50)
+        monsters.append(m)
+        x = x + 55
+    count = count - 1
+
 clock = pygame.time.Clock()
 
 while True:
     ball.fill()
     platform.fill()
+
+    for monster in monsters:
+        monster.draw()
+
     platform.draw()
     ball.draw()
     pygame.display.update()
