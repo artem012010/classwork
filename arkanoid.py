@@ -63,8 +63,24 @@ while game:
     if ball.rect.x > 450 or ball.rect.x < 0:
         ball_speedx *= -1
 
+    if ball.rect.y > 350:
+        lose = pygame.font.Font(None, 100).render('Ты проиграл', True, (255,0,0))
+        window.blit(lose,(100,200))
+        game = False
+
+    if len(monsters) == 0:
+        win = pygame.font.Font(None, 100).render('Ты победил', True, (0,255,0))
+        window.blit(win,(100,200))
+        game = False
+
+
     for monster in monsters:
         monster.draw()
+        if monster.rect.colliderect(ball.rect):
+            monsters.remove(monster)
+            monster.fill()
+            ball_speedy *= -1
+
 
     ball.draw()
     platform.draw()
