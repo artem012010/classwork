@@ -37,10 +37,31 @@ for j in range(3):
 
 clock = pygame.time.Clock()
 
+ball_speedx = 3
+ball_speedy = 3
+
 game = True
 while game:
+
     ball.fill()
     platform.fill()
+
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                platform.rect.x += 20
+            if event.key == pygame.K_LEFT:
+                platform.rect.x -= 20
+
+    ball.rect.x += ball_speedx
+    ball.rect.y += ball_speedy
+
+    if ball.rect.colliderect(platform.rect):
+        ball_speedy *= -1
+    if ball.rect.y < 0:
+        ball_speedy *= -1
+    if ball.rect.x > 450 or ball.rect.x < 0:
+        ball_speedx *= -1
 
     for monster in monsters:
         monster.draw()
