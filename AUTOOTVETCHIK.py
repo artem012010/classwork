@@ -1,47 +1,20 @@
-# Код основной программы не важно как называется допустим zeus.py
-from time import *
-from analizator import *
+import telebot
 
-print('Вас приветствует спортивный центр ЗЕВС')
-start = time() 
-zapros = input('Что бы вы хотели узнать?')
-while zapros != 'выйти':
-    otvet(zapros)
-    zapros = input('Еще что нибудь (выйти - завершение)?')
+TOKEN = '6205631880:AAEpNUxvjiL9GY8zHyI4F0d3AEDy5CGertA'
+bot = telebot.TeleBot(TOKEN)
 
-end = time() 
-print('Было приятно пообщаться вы пробыли с нами')
-print(int((end - start)/60),'минут')
+@bot.message_handler(commands=['start'])
+def handle_start(message):
+    bot.send_message(message.chat.id, "Привет! Я простой и понятный чат-бот. Как тебя зовут?")
 
-#Код модуля важно назвать как импорт из основной программы в моем случае analizator.py
-from random import randint
+@bot.message_handler(func=lambda message: True)
+def handle_messages(message):
+    if "привет" in message.text.lower():
+        bot.send_message(message.chat.id, "Привет!")
+    elif "как дела" in message.text.lower():
+        bot.send_message(message.chat.id, "Хорошо, спасибо! Как у тебя?")
+    else:
+        bot.send_message(message.chat.id, "Извини, я не понимаю твоего сообщения. Можешь повторить?")
 
-def otvet(zapros):
-    zapros = zapros
-
-    if zapros.find('трени') != -1:
-        raspisanie()
-
-    if zapros.find('оплат') != -1 or zapros.find('деньг') != -1:
-        oplata()
-
-    if zapros.find('игра') != -1:
-        ugaday()
-
-def raspisanie():
-    print('Плавание вт\чт 20:00')
-    print('Футбол сб\вс 16:00')
-
-def oplata():
-    trenirovka = int(input('Сколько занятий вы посетили'))
-    print('Вы должны оплатить',trenirovka * 500,'сом')
-
-def ugaday():
-    win = randint(1,10)
-    for i in range(3):
-        num = int(input('Введите число'))
-        if num == win:
-            print('Вы победили')
-            break
-        else:
-            print('попробуй еще раз')
+if __name__ == "__main__":
+    bot.polling(none_stop=True)
