@@ -1,4 +1,5 @@
 from turtle import *
+from time import sleep
 
 def light(x,y,col,on):
     penup()
@@ -12,10 +13,22 @@ def light(x,y,col,on):
     else:
         circle(30)
 
-light(x=0,y=60,col='red',on=True)
-light(x=0,y=0,col='yellow',on=False)
-light(x=0,y=-60,col='green',on=False)
-
+while True:
+    light(0,60,'red',True)
+    light(0,0,'yellow',False)
+    light(0,-60,'green',False)
+    sleep(2)
+    clear()
+    light(0,60,'red',False)
+    light(0,0,'yellow',True)
+    light(0,-60,'green',False)
+    sleep(2)
+    clear()
+    light(0,60,'red',False)
+    light(0,0,'yellow',False)
+    light(0,-60,'green',True)
+    sleep(2)
+    clear()
 
 hideturtle()
 exitonclick()
