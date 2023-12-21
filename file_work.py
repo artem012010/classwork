@@ -1,23 +1,21 @@
 from turtle import *
 
-def light_on(x,y,col):
+def light(x,y,col,on):
     penup()
     goto(x,y)
     pendown()
     color(col)
-    begin_fill()
-    circle(30)
-    end_fill()
+    if on:
+        begin_fill()
+        circle(30)
+        end_fill()
+    else:
+        circle(30)
 
-def light_off(x,y):
-    penup()
-    goto(x,y)
-    pendown()
-    circle(30)
+light(x=0,y=60,col='red',on=True)
+light(x=0,y=0,col='yellow',on=False)
+light(x=0,y=-60,col='green',on=False)
 
-light_on(0,50,'red')
-light_off(0,0)
-light_off(0,-50)
 
 hideturtle()
 exitonclick()
