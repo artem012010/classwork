@@ -1,43 +1,242 @@
+Задача 1. Список цветов (ученики создают только HTML-файл)
+
 <!DOCTYPE html>
-<html>
- <head>
-  <title>Анкета</title>
- </head>
- <body>
-  <form method="post" action="program">
-    <p><h2>Заполните анкету:</h2>
-    <p><b>Ваше имя:</b>       
-    <input type="text" maxlength="25" size="25" ></p>
-    <p><b>Ваша фамилия:</b>       
-    <input type="text" maxlength="25" size="25" ></p>
-    <p><b>Ваш возраст:</b>      
-    <input type="number" name="age" value="10" min="10" max="18" step="1"></p>
-    <p><b>Выберите курсы, которые Вас интересуют:</b>           
-    <p><input type="checkbox" name="course" value="Scratch"> Scratch</p>
-    <p><input type="checkbox" name="course" value="Gamedesign"> Gamedesign</p>
-    <p><input type="checkbox" name="course" value="Python Start"> Python Start</p>
-    <p><input type="checkbox" name="course" value="Python Pro">Python Pro</p>  
-    <p><b>Дополнительный комментарий:</b>
-    <textarea name="comment"></textarea></p>
-    <p><input type="submit" value="Отправить"></p>
-  </form>
+<head>
+  <title>Цветовая модель RGB</title>
+</head>
+<body>
+  <h1>Цветовая модель RGB</h1>
+  <p>RGB <i>(аббревиатура английских слов red, green, blue - красный, зелёный, синий)</i> - цветовая модель, описывающая способ кодирования цвета в электронных устройствах. В модели RGB для цветовоспроизведения используются три цвета, которые принято называть основными:</p>
+  <b>
+   <ul> 
+        <li class= "red">Красный (Red)</li>
+        <li class= "green">Зелёный (Green)</li>
+        <li class= "blue">Синий (Blue)</li>
+    </ul> 
+   </b>
+  <p>Выбор именно этих цветов связан с особенностями строения сетчатки глаза человека. В сетчатке обнаружено 3 вида колбочек - рецепторов, ответственных за восприятие цвета. Рецептор каждого вида воспринимает только один из трёх цветов модели RGB.</p>
 </body>
-</html>
+
+Задача 2. Фон + цвет  (ученики создают только CSS-файл)
+
+p {
+  font-style: normal;
+  color: rgb(22, 16, 16);
+  font-size: 18px;
+}
 
 
+.darkred {
+  color: rgb(139, 0, 0);
+  background-color:rgb(255, 228, 225);
+}
+
+
+.red {
+  color: rgb(255, 0, 0);
+  background-color:rgb(255, 228, 225);
+}
+
+
+.salmon {
+  color: rgb(250, 128, 114);
+  background-color:rgb(255, 228, 225);
+}
+
+
+.blue {
+  color: rgb(0, 0, 255);
+  background-color:rgb(214, 228, 238);
+}
+
+
+.darkblue {
+  color: rgb(0, 0, 139);
+  background-color:rgb(214, 228, 238);
+}
+
+
+.lightblue {
+  color: rgb(135, 206, 250);
+  background-color:rgb(214, 228, 238);
+}
+
+
+.darkgreen {
+  color: rgb(0, 56, 0);
+  background-color:rgb(215, 235, 212);
+}
+
+
+.lightgreen {
+  color: rgb(122, 207, 122);
+  background-color:rgb(215, 235, 212);  
+}
+
+
+.green {
+  color: rgb(0, 128, 0);
+  background-color:rgb(215, 235, 212);
+}
+
+Задача 3. Интересные факты
+
+CSS
+
+.b-radius{
+    border: 4px double gainsboro; 
+    padding: 25px; 
+    border-radius: 30px 10px ; 
+    background-color:rgb(65, 105, 225);
+    color:rgb(255, 255, 255);
+   }
+
+
+.b-radius2 {
+    border: 4px double gainsboro; 
+    padding: 25px; 
+    border-radius: 50px 50px ;
+    background-color:rgb(255, 140, 0);
+    color:rgb(80, 41, 41);  
+   }
+
+
+.b-radius3 {
+    border: 4px double gainsboro; 
+    padding: 25px; 
+    border-radius: 13em 0.5em/1em 0.5em;
+    background-color:rgb(255, 255, 255);
+    color:rgb(68, 10, 70);   
+   }
+
+
+.b-radius4 {
+    border: 4px double gainsboro; 
+    padding: 25px; 
+    border-radius: 10em/1em;
+    background-color:rgb(255, 255, 0);
+    color:rgb(8, 71, 19);   
+   }
+
+
+.b-radius5 {
+    border: 4px double gainsboro; 
+    padding: 25px; 
+    border-radius: 10px 10px;
+    background-color:rgb(211, 211, 211);
+   }
+
+HTML
 
 <!DOCTYPE html>
 <html>
  <head>
-  <title>Авторизация</title>
- </head>
+  <title>Факты</title>
+
+
+ </head> 
  <body>
-    <form method="post" action="program">
-      <p><h3>Заполни форму авторизации:</h3>
-      <p><input name="login" placeholder="Логин"></p>
-      <p><input name="pass" type="password" placeholder="Пароль"></p>
-      <p><input type="submit" value="Вход"> 
-      <input type="reset" value="Очистить"></p>
-    </form>
- </body>
+     <p class="b-radius">Знаете почему в оформлении Fasebook используется синяя палитра цветов? Дело в том, что Марк Цукерберг страдает дальтонизмом. Он не различает красный и зелёный цвета.</p>
+     <p class="b-radius2">Оранжевый цвет назван в честь спелых апельсинов. До того как это слово было введено в англоязычный мир, оранжевый цвет назывался желтовато-красный.</p>
+     <p class="b-radius3">Настоящий цвет Солнца - белый. В этом можно убедиться, посмотрев на Солнце из космоса. Наша атмосфера, преломляя солнечные лучи, делает его желтоватым.</p>
+     <p class="b-radius4">Наиболее распространенный цвет для маркеров – желтый. Почему? Он не оставляет тени при ксерокопировании.</p>
+     <p class="b-radius5">У дальтоников ночное зрение развито лучше, чем у людей с обычным цветовосприятием.</p>
+ 
+ </body> 
 </html>
+
+Задача 4. Подсветка кода
+
+CSS
+
+.title {
+  font-weight: 500;
+  color: rgb(47, 79, 79);
+  font-size: 26px;
+}
+
+
+p {
+  font-style: normal;
+  color: rgb(47, 79, 79);
+}
+
+
+.keyword { 
+    color: rgb(0, 0, 255); 
+} 
+
+
+.string { 
+    color: rgb(182, 3, 3); 
+} 
+ 
+.tab {   
+    margin-left: 20px
+}
+
+HTML
+
+<!DOCTYPE html>
+<head>
+  <title>Код программы</title>
+</head>
+<body>
+    <h1 class = "title">Код программы</h1>
+    
+    <p><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, url_for, redirect <br>
+    
+    <span class="keyword">import</span> os </p>
+    
+    <p><span class="keyword">def</span> index():<br>
+    <span class="keyword tab">return</span> redirect(url_for(
+    <span class="string">'static'</span>, filename = <span
+    class="string">'index.html'</span>))</p> 
+    
+    <p>folder = os.getcwd()</p>
+    
+    <p>app = Flask(__name__, static_folder = folder)
+    <br>
+    app.add_url_rule(<span class="string">'/'</span>, <span   class="string">'index'</span>)</p> 
+    <p><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:<br>
+    <span class="tab">app.run()</span></p>
+ 
+</body>
+
+Задача 5. Текст в два столбца
+
+CSS
+
+.blocksection {
+    display: flex;
+}
+
+
+.column {
+    width: 50%;
+    margin: 10px;
+}
+
+
+.term{
+    font-style: normal;
+    font-weight: 100;
+    font-size: 25px;
+    color:rgb(16, 3, 75);
+}
+
+HTML
+
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Основные языки веб-разработки</title>
+ </head> 
+ <body> 
+    <h1>Основные языки веб-разработки</h1>
+    <div class="blocksection">
+        <div class="column"><span class="term">HTML</span> <i>(HyperText Markup Language - язык разметки гипертекста)</i> - стандартизированный язык разметки веб-страниц во Всемирной паутине. Это специальный язык разметки, который применяется при создании сайтов в Интернете. Все браузеры понимают HTML и могут отображать содержимое страницы, ориентируясь на разметку, выполненную с помощью HTML-тегов.</div>
+ 
+        <div class="column"><span class="term">CSS</span> <i>(Cascading Style Sheets — каскадные таблицы стилей)</i> - формальный язык описания внешнего вида документа (веб-страницы), написанного с использованием HTML. CSS используется создателями веб-страниц для описания цветов, шрифтов, стилей, расположения отдельных блоков и других аспектов представления веб-страниц в окне браузера.</div>
+   </div>
+ </body>
