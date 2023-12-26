@@ -38,20 +38,30 @@ def sun(x,y,col,size):
         left(100)
     end_fill()
 
-zapros = input('Введите время суток')
 
-if zapros == 'день':
-    zemlya('lightgreen')
-    nebo('lightblue')
-    sun(200,200,'yellow',100)
+def dom():
+    color('gray')
+    penup()
+    goto(-100,-150)
+    pendown()
+    begin_fill()
+    for i in range(4):
+        forward(100)
+        left(90)
+    end_fill()
+    forward(100)
+    color('red')
+    left(90)
+    begin_fill()
+    for i in range(3):
+        forward(100)
+        right(120)
+    end_fill()
 
-if zapros == 'ночь':
-    zemlya('darkgreen')
-    nebo('darkblue')
-    for i in range(5):
-        x = randint(-200,200)
-        y = randint(200,350)
-        sun(x,y,'white',20)
+
+zemlya('lightgreen')
+nebo('lightblue')
+dom()
 
 
 
