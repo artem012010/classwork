@@ -1,115 +1,31 @@
 from turtle import *
-pensize(2)
-forward(100)
-left(90)
-forward(100)
-left(90)
-forward(100)
-left(90)
-forward(100)
-exitonclick()
+from random import *
 
+def dance(name):
+    name.goto(0,0)
+    name.pendown()
+    for i in range(5):
+        name.forward(100)
+        name.left(144)
 
-from turtle import *
+def start_race(name,col,x,y):
+    name.penup()
+    name.shape('turtle')
+    name.color(col)
+    name.goto(x,y)
 
-pensize(10)
-color("blue")
-forward(100)
+naruto = Turtle()
+start_race(naruto,'orange',-200,50)
 
-exitonclick() 
+saske = Turtle()
+start_race(saske,'blue',-200,-50)
 
-from turtle import *
+while naruto.xcor() < 200 and saske.xcor() < 200 :
+    naruto.forward( randint(10,20) )
+    saske.forward( randint(10,20) )
 
-pensize(15)
-color('lightblue')
-
-forward(100)
-left(120)
-forward(100)
-left(120)
-forward(100)
-
-exitonclick()
-
-
-from turtle import *
-
-pensize(10)
-
-color('pink')
-circle(50)
-
-color('orange')
-circle(50)
-
-color('yellow')
-circle(50)
-
-color('lime')
-circle(50)
-
-exitonclick()
-
-
-from turtle import *
- 
-def ship():
-  color('light blue')
-  pensize(5)
-  forward(50)
-  left(180-45)
-  forward(70)
-  left(180-45)
-  forward(50)
-  color('black')
-  pensize(2)
-  forward(30)
-  right(90)
-  forward(45)
-  left(180-45)
-  forward(50)
-  left(45)
-  forward(80)
-  left(45)
-  forward(50)
-  left(180-45)
-  forward(105)
-    
- 
-#отрисовка волны, не менять
-penup()
-goto(-110,-25)
-pendown()
-color("blue")
-pensize(2)
-left(45)
-speed(0)
-i=0
-while i<20:
-   forward(10)
-   right(90)
-   forward(10)
-   left(90)
-   i=i+1
-right(45)
- 
-#отрисовка кораблика
-penup()
-goto(0,-30)
-pendown()
-ship() 
-
-right(180)
-penup()
-goto(-130,130)
-pendown()
-ship()
-
-right(180)
-penup()
-goto(130,130)
-pendown()
-ship()
-
-exitonclick()
-
+winner = max(naruto.xcor(), saske.xcor())
+if naruto.xcor() == winner:
+    dance(naruto)
+if saske.xcor() == winner:
+    dance(saske)
