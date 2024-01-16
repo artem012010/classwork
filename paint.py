@@ -1,31 +1,65 @@
 from turtle import *
 
-gena = Turtle() # Создаем обьект Черепашки
+gena = Turtle() 
 gena.shape('circle')
+gena.size = 1
 
-#функция для обработки перетаскивания
-def move(x,y):
+def drag(x,y):
     gena.goto(x,y)
 
-#функция для обработки клика по экрану
-def click_screen(x,y):
+def click(x,y):
     gena.penup()
     gena.goto(x,y)
     gena.pendown()
 
-#функция для обработки клавиши g
-def green_color():
-    gena.color('green')
+def yellowCol():
+    gena.color('yellow')
 
-#функция для обработки клавиши Стрелка вверх
+def blackCol():
+    gena.color('black')
+
 def moveUp():
-    gena.goto(gena.xcor(),gena.ycor()+5)
+    gena.goto(gena.xcor(),gena.ycor() + 5)
 
-screen = gena.getscreen() # Создаем обьект экрана
-screen.listen() # Просим экран слушать клавиатуру
-screen.onkey(green_color,'g') # Подписка на клавишу g
-screen.onkey(moveUp,'Up') # Подписка на клавишу Стрелка
-#Подписка на клик по экрану
-screen.onscreenclick(click_screen)
-#Подписка на перетаскивание черепашки
-gena.ondrag(move)
+def moveDown():
+    gena.goto(gena.xcor(),gena.ycor() - 5)
+
+def moveRight():
+    gena.goto(gena.xcor() + 5,gena.ycor())
+
+def moveLeft():
+    gena.goto(gena.xcor() - 5,gena.ycor())
+
+def plusSize():
+    gena.size += 1
+    gena.pensize(gena.size)
+
+def minusSize():
+    gena.size -= 1
+    gena.pensize(gena.size)
+
+def beginFill():
+    gena.begin_fill()
+
+def endFill():
+    gena.end_fill()
+
+screen = gena.getscreen() 
+screen.onscreenclick(click)
+screen.listen() 
+
+screen.onkey(yellowCol,'y')
+screen.onkey(blackCol,'b')
+
+screen.onkey(moveUp,'Up')
+screen.onkey(moveDown,'Down') 
+screen.onkey(moveRight,'Right') 
+screen.onkey(moveLeft,'Left') 
+
+screen.onkey(plusSize,'o') 
+screen.onkey(minusSize,'p') 
+
+screen.onkey(beginFill,'q') 
+screen.onkey(endFill,'w') 
+
+gena.ondrag(drag)
