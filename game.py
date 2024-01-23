@@ -1,4 +1,5 @@
 from time import sleep
+from random import randint
 
 class Hero():
     def __init__(self,name,health,power,weapon):
@@ -13,10 +14,10 @@ class Hero():
         print('Я сражаюсь', self.weapon,'и наношу',self.power,'урона')
 
     def attack(self,enemy):
+        enemy.health = enemy.health - self.power * (randint(10,20)*0.1)
         print(self.name,'наносит удар',enemy.name)
-        print(enemy.name,'качнулся и потерял',self.power,'здоровья')
-        print('Теперь уровень его жизней состовляет', enemy.health - self.power,'хп \n')
-        enemy.health = enemy.health - self.power
+        print('Теперь уровень его жизней состовляет', enemy.health,'хп \n')
+
 
     def fight(self,enemy):
         while self.health > 0 and enemy.health > 0:
@@ -29,6 +30,6 @@ class Hero():
         else:
             print(self.name,'Пал в этом сложном бою')
 
-hero = Hero('Леонид',100,20,'меч')
-dragon = Hero('Горыныч',200,50,'огонь')
+hero = Hero('Леонид',100,30,'меч')
+dragon = Hero('Горыныч',150,50,'огонь')
 hero.fight(dragon)
