@@ -28,7 +28,7 @@ class Hero():
             sleep(2)
             enemy.attack(self)
             if self.health <= 0:
-                print(enemy.name,'Пал в этом сложном бою')
+                print(self.name,'Пал в этом сложном бою')
                 break
             sleep(2)
 
@@ -45,4 +45,20 @@ sleep(2)
 choice = input('Хотите сразиться с Гитлером?')
 if choice == 'да':
     hero.fight(rogue)
-
+sleep(2)
+if hero.health > 0:
+    if hero.health < 100:
+        hero.health = 100
+        hero.power *= 2
+        print(hero.name,'вылечился и стал сильнее')
+        print('Теперь уровень его атаки составляет',hero.power)
+    sleep(2)
+    print('Мы добрались до логова дракона \n')
+    print('Да начнется битва \n')
+    sleep(2)
+    hero.fight(dragon)
+    if hero.health > 0:
+        print('Получите свое сокровище')
+    else:
+        print('Конец :(')
+    
