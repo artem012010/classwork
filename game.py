@@ -22,14 +22,27 @@ class Hero():
     def fight(self,enemy):
         while self.health > 0 and enemy.health > 0:
             self.attack(enemy)
+            if enemy.health <= 0:
+                print(enemy.name,'Пал в этом сложном бою')
+                break
             sleep(2)
             enemy.attack(self)
+            if self.health <= 0:
+                print(enemy.name,'Пал в этом сложном бою')
+                break
             sleep(2)
-        if enemy.health <= 0:
-            print(enemy.name,'Пал в этом сложном бою')
-        else:
-            print(self.name,'Пал в этом сложном бою')
 
-hero = Hero('Леонид',100,30,'меч')
-dragon = Hero('Горыныч',150,50,'огонь')
-hero.fight(dragon)
+hero = Hero('Леонид',100,30,'Меч')
+rogue = Hero('Адольф',100,30,'Усы')
+dragon = Hero('Горыныч',150,50,'Огонь')
+
+print('Квест рыцарь и дракон \n')
+sleep(2)
+print(hero.name,'идет к логову дракона \n')
+sleep(2)
+print(hero.name,'наткнулся на 3 рейх \n')
+sleep(2)
+choice = input('Хотите сразиться с Гитлером?')
+if choice == 'да':
+    hero.fight(rogue)
+
