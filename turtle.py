@@ -31,11 +31,18 @@ class Sprite(Turtle):
         self.xe = xe
         self.ye = ye
         self.goto(xs,ys)
-        self.left(self.towards(xe,ye))
+        self.setheading(self.towards(xe,ye))
+
+    def make_step(self):
+        self.forward(10)
+        if self.distance(self.xe,self.ye) < 10:
+            self.set_move(self.xe,self.ye,self.xs,self.ys)
 
 player = Sprite(0,-200,'black','turtle')
 enemy1 = Sprite(-100,-50,'red','circle')
+enemy1.set_move(-100,-50,100,-50)
 enemy2 = Sprite(100,50,'red','circle')
+enemy2.set_move(100,50,-100,50)
 goal = Sprite(0,100,'green','triangle')
 
 screen = player.getscreen()
@@ -49,6 +56,8 @@ screen.onkey(player.move_left,'a')
 points = 0
 
 while points < 3:
+    enemy1.make_step()
+    enemy2.make_step()
     if player.collide(goal):
         player.goto(0,-200)
         points += 1
@@ -59,3 +68,7 @@ while points < 3:
 if points == 3:
     enemy1.hideturtle()
     enemy2.hideturtle()
+    player.hideturtle()
+    goal.hideturtle()
+    goal.goto(-100,-50)
+    goal.write('Победа',font=('Arial',50,'bold'))
