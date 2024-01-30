@@ -25,6 +25,14 @@ class Sprite(Turtle):
     def move_left(self):
         self.goto(self.xcor()-5,self.ycor())
 
+    def set_move(self, xs,ys,xe,ye):
+        self.xs = xs
+        self.ys = ys
+        self.xe = xe
+        self.ye = ye
+        self.goto(xs,ys)
+        self.left(self.towards(xe,ye))
+
 player = Sprite(0,-200,'black','turtle')
 enemy1 = Sprite(-100,-50,'red','circle')
 enemy2 = Sprite(100,50,'red','circle')
