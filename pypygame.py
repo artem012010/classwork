@@ -1,4 +1,5 @@
 #Подключение нужных модулей
+from random import randint
 import pygame
 pygame.init()
 #создание окна игры
@@ -23,11 +24,34 @@ class Sprite():
 
 question_card = Sprite(100,100,300,100)  
 question_card.set_text('ВОПРОС',50)
+question_card.draw()
 answer_card = Sprite(100,300,300,100)  
 answer_card.set_text('Ответ',50)
+answer_card.draw()
 
 while True:
     pygame.display.update()
-    question_card.draw()
-    answer_card.draw()
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                number = randint(1,3)
+                if number == 1:
+                    question_card.set_text('Кто самый крутой?', 30)
+                if number == 2:
+                    question_card.set_text('Кто здесь Гитлер?', 30)
+                if number == 3:
+                    question_card.set_text('Кто самый умный?', 30) 
+                question_card.draw()  
+
+            if event.key == pygame.K_a:
+                number = randint(1,3)
+                if number == 1:
+                    answer_card.set_text('Роман', 30)
+                if number == 2:
+                    answer_card.set_text('Кутман', 30)
+                if number == 3:
+                    answer_card.set_text('АЛИЯ', 30)   
+                answer_card.draw()
+
     clock.tick(40)           
+          
