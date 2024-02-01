@@ -1,57 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online shop</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-   <header>
-    <img src="https://mars.algoritmika.org/uploads/2021/02/logo_0_1613588860.svg">
-    <a href="">Скидки</a>
-   </header>
-   <nav>
-    <a href="">Каталог</a>
-    <a href="">Оптом</a>
-    <a href="">Доставка</a>
-    <a href="">Возврат</a>
-   </nav>
-   <main>
-    <h1>Проффесионалы советуют</h1>
-    <div class="products">
-        <div class="product">
-            <h3>Ноут для работы</h3>
-            <img src="https://mars.algoritmika.org/uploads/2021/02/notebook-405755_1920_0_1613586011.jpg">
-            <p>Samsung V145-S</p>
-            <a href="">Подробнее</a>
-        </div>
-        <div class="product">
-            <h3>Как выбрать наушники</h3>
-            <img src="https://mars.algoritmika.org/uploads/2021/02/music-1813100_1280_0_1613586010.png">
-            <p>Поговорим о новинках</p>
-            <a href="">Подробнее</a>
-        </div>
-        <div class="product">
-            <h3>Телефон мечты</h3>
-            <img src="https://mars.algoritmika.org/uploads/2021/02/mobile-phone-1875813_1920_0_1613586011.jpg">
-            <p>Apple iphone 13</p>
-            <a href="">Подробнее</a>
-        </div>
-        <div class="product">
-            <h3>Техника для всего</h3>
-            <img src="https://mars.algoritmika.org/uploads/2021/02/laptop-1483974_1920_0_1613586010.jpg">
-            <p>И целого мира мало...</p>
-            <a href="">Подробнее</a>
-        </div>
-    </div>
-    <img src="https://mars.algoritmika.org/uploads/2021/02/mobile-phone-1419275_1920_0_1613586010.jpg">
-   </main>
-   <footer>
-    <img src="https://mars.algoritmika.org/uploads/2021/02/icon-set-1142000_1280%201_0_1613586391.png">
-    <img src="https://mars.algoritmika.org/uploads/2021/02/Group%201_0_1613586391.png">
-    <img src="https://mars.algoritmika.org/uploads/2021/02/instagram-3288419_1280%201_0_1613586391.png">
-    <p>Напиши — получи промокод!</p>
-   </footer>
-</body>
-</html>
+body {
+    background: black;
+    font-family: sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+header a {
+    background-color: yellow;
+    padding: 10px;
+    text-decoration: none;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 25px;
+    color: black;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 10px solid yellow;
+    border-top: 10px solid yellow;
+    padding: 30px;
+}
+
+nav a {
+    background-color: yellow;
+    padding: 5px;
+    text-decoration: none;
+    width: 100px;
+    height: 20px;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 20px;
+    color: black;
+}
