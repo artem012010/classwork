@@ -51,3 +51,18 @@ while answer != 3:
    answer = int(input('Ваше действие: 1 - взять, 2 - вернуть, 3 - домой'))
 print('Ждём вас:', student_card)
 
+
+
+
+readers = {214: 'Иванов, 7а', 122: 'Котов, 6б', 59: 'Васина, 11а', 368: 'Петренко, 2г'}
+number = input('Добро пожаловать! Ваш читательский билет:')
+while True:
+   try:
+       number = int(number)
+       break
+   except:
+       number = input('Введите номер числом:')
+if number in readers:
+   print('Здравствуйте, читатель(-ница)', readers[number])
+else:
+   print('Данный читательский билет не найден!')
