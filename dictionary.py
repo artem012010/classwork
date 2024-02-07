@@ -35,3 +35,21 @@ else:
        print(authors)
    else:
        print('Ответ получен')
+
+
+
+student_card = {'номер': '324', 'фамилия': 'Иванов'}
+print('Добро пожаловать!', student_card)
+answer = int(input('Личный кабинет: 1 - взять, 2 - вернуть, 3 - домой'))
+while answer != 3:
+   if answer == 1:
+       title = input('Введите название:')
+       student_card['долг'] = title
+       print('Карточка читателя:', student_card)
+   if answer == 2:
+       if 'долг' in student_card:
+           del student_card['долг']
+       print('Карточка читателя:', student_card)
+   answer = int(input('Ваше действие: 1 - взять, 2 - вернуть, 3 - домой'))
+print('Ждём вас:', student_card)
+
