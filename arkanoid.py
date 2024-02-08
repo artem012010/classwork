@@ -6,7 +6,11 @@ window = pygame.display.set_mode((500, 500))
 window.fill(background)
 clock = pygame.time.Clock()
 
+
+move_right = False
+move_left = False
 game = True
+
 
 class Sprite():
     def __init__(self, filename, x, y, width, height):
@@ -26,6 +30,8 @@ class Sprite():
 ball = Sprite('ball.png', 160, 200, 50, 50)
 platform = Sprite('platform.png', 200, 300, 100, 30)
 
+
+
 monsters = list()
 count = 9
 for j in range(3):
@@ -42,9 +48,26 @@ while game:
     ball.fill()
     platform.fill()
 
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                move_right = True
+            if event.key == pygame.K_LEFT:
+                move_left = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT:
+                move_right = False
+            if event.key == pygame.K_LEFT:
+                move_left = False
+
+    if move_right:
+        platform.rect.x += 5
+    if move_left:
+        platform.rect.x -= 5
+
 
     for monster in monsters:
         monster.draw()
