@@ -4,27 +4,53 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
-# Экран (объект класса Screen) - это виджет типа "макет" (Screen - наследник класса RelativeLayout).
-# ScreenManager - это особый виджет, который делает видимым один из прописанных в нём экранов.
+
 
 class FirstScr(Screen):
     def __init__(self, name='first'):
         super().__init__(name=name) # имя экрана должно передаваться конструктору класса Screen
-        btn = Button(text="Переключиться на другой экран")
-        btn.on_press = self.next
-        self.add_widget(btn) # экран - это виджет, на котором могут создаваться все другие (потомки)
+        txt = Label(text=' ПЕРВЫЙ ЭКРАН')
+        btn = Button(text='ПЕРЕХОД НА ВТОРОЙ ЭКРАН')
+        btn.on_press = self.next 
+        layout = BoxLayout()
+        layout.add_widget(txt)
+        layout.add_widget(btn)
+        self.add_widget(layout) # экран - это виджет, на котором могут создаваться все другие (потомки)
 
     def next(self):
-        self.manager.transition.direction = 'left' # объект класса Screen имеет свойство manager 
-                                                   # - это ссылка на родителя
+        self.manager.transition.direction = 'left' # объект класса Screen имеет свойство manager                                     # - это ссылка на родителя
         self.manager.current = 'second'
 
 class SecondScr(Screen):
     def __init__(self, name='second'):
         super().__init__(name=name)
-        btn = Button(text="Вернись, вернись!")
-        btn.on_press = self.next
-        self.add_widget(btn)
+        btn1 = Button(text='ПЕРЕХОД НА ПЕРВЫЙ ЭКРАН')
+        btn2 = Button(text='ПЕРЕХОД НА ТРЕТИЙ ЭКРАН')
+        btn1.on_press = self.next 
+        btn2.on_press = self.back 
+        layout = BoxLayout()
+        layout.add_widget(btn1)
+        layout.add_widget(btn2)
+        self.add_widget(layout) 
+        
+    def next(self):
+        self.manager.transition.direction = 'right'
+        self.manager.current = 'first'
+
+    def back(self):
+        self.manager.transition.direction = 'left'
+        self.manager.current = 'third'
+
+class ThirdScr(Screen):
+    def __init__(self, name='third'):
+        super().__init__(name=name)
+        txt = Label(text='ТРЕТИЙ ЭКРАН')
+        btn = Button(text='ПЕРЕХОД НА ПЕРВЫЙ ЭКРАН ')
+        btn.on_press = self.next 
+        layout = BoxLayout()
+        layout.add_widget(txt)
+        layout.add_widget(btn)
+        self.add_widget(layout) 
         
     def next(self):
         self.manager.transition.direction = 'right'
@@ -35,8 +61,7 @@ class MyApp(App):
         sm = ScreenManager()
         sm.add_widget(FirstScr())
         sm.add_widget(SecondScr())
-        # будет показан FirstScr, потому что он добавлен первым. Это можно поменять вот так:
-        # sm.current = 'second'
+        sm.add_widget(ThirdScr())
         return sm
 
 app = MyApp()
