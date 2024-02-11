@@ -1,16 +1,19 @@
-# приложение с одним виджетом.
-
+# расположение виджетов "друг на друге"
 from kivy.app import App
-# все виджеты находятся в отдельных модулях внутри kivy.uix:
-from kivy.uix.button import Button # кнопка
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+from kivy.uix.boxlayout import BoxLayout
 
 class MyApp(App):
-   # если в объекте класса App есть метод build(),
-   # то run() выполнит этот метод 
-   # и выведет на экран то, что возвращает build
    def build(self):
+      txt = Label(text='Это надпись')
       btn = Button(text='Это кнопка')
-      return btn # возвращается всегда виджет!
+      layout = BoxLayout()
+      layout.add_widget(txt)
+      layout.add_widget(btn) # эта команда делает видимыми сразу две кнопки (пробуйте убрать)
+      return layout
 
-app = MyApp()
-app.run() # будет показан виджет класса Button
+MyApp().run()
+# вторая кнопка визуально не находится на первой!
+# расположением своих потомков управляют только виджеты-макеты (layout)
+# остальные виджеты (например, кнопка) не влияют на место и размер своих потомков
