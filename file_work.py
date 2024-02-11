@@ -1,34 +1,20 @@
-from turtle import *
-from time import sleep
+otdel_dizaina = {
+    'Пушкин': {
+        'портфолио': ['WoT','GTA5'],
+        'профиль': 'Анимешник',
+    }
+}
+surname = input('Введите фамилию')
+if surname in otdel_dizaina:
+    print('Фамилия',surname)
+    print('Первая работа автора',otdel_dizaina[surname]['портфолио'][0])
+    print('Должность:',otdel_dizaina[surname]['профиль'])
+else:
+    otdel_dizaina[surname] = dict()
+    portfolio = input('Введите проекты').split()
+    otdel_dizaina[surname]['портфолио'] = portfolio
+    otdel_dizaina[surname]['профиль'] = input('Введите должность')
 
-def light(x,y,col,on):
-    penup()
-    goto(x,y)
-    pendown()
-    color(col)
-    if on:
-        begin_fill()
-        circle(30)
-        end_fill()
-    else:
-        circle(30)
 
-while True:
-    light(0,60,'red',True)
-    light(0,0,'yellow',False)
-    light(0,-60,'green',False)
-    sleep(2)
-    clear()
-    light(0,60,'red',False)
-    light(0,0,'yellow',True)
-    light(0,-60,'green',False)
-    sleep(2)
-    clear()
-    light(0,60,'red',False)
-    light(0,0,'yellow',False)
-    light(0,-60,'green',True)
-    sleep(2)
-    clear()
+    
 
-hideturtle()
-exitonclick()
