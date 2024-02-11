@@ -1,20 +1,29 @@
-otdel_dizaina = {
-    'Пушкин': {
-        'портфолио': ['WoT','GTA5'],
-        'профиль': 'Анимешник',
-    }
+otdel = {
+    'Пушкин': { 'портфолио': ['WoT','GTA5','Genshin'],
+    'должность': 'Ген директор', 'эффективность': 100}, 
+    'Гитлер': {'портфолио': ['Doom','Among us','Genshin'],
+    'должность': 'Бизнес аналитик', 'эффективность': 99},
+    'Ленин': {'портфолио': ['Комунизм','Among us','Genshin'],
+    'должность': 'Сторож', 'эффективность': 200},
 }
-surname = input('Введите фамилию')
-if surname in otdel_dizaina:
-    print('Фамилия',surname)
-    print('Первая работа автора',otdel_dizaina[surname]['портфолио'][0])
-    print('Должность:',otdel_dizaina[surname]['профиль'])
-else:
-    otdel_dizaina[surname] = dict()
-    portfolio = input('Введите проекты').split()
-    otdel_dizaina[surname]['портфолио'] = portfolio
-    otdel_dizaina[surname]['профиль'] = input('Введите должность')
 
+zapros = input('1 - фамилии всех сотрудников 2 - самый эффективный 3 - Должности')
+while zapros != 'off':
+    if zapros == '1':
+        for surname in list(otdel.keys()):
+            print(surname)
+    if zapros == '2':
+        kolvo_sotrudnikov = len(otdel)
+        surnames = list(otdel.keys())
+        effectivnost = []
+        for i in range(kolvo_sotrudnikov):
+            effectivnost.append(otdel[surnames[i]]['эффективность'])
+        effectivnost.sort()
+        print('Максимальная эффективность',effectivnost[-1])
+    if zapros == '3':
+        surnames = list(otdel.keys())
+        for surname in surnames:
+            print(otdel[surname]['должность'])
 
-    
+    zapros = input('1 - фамилии всех сотрудников 2 - самый эффективный 3 - Должности')
 
