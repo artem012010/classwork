@@ -132,6 +132,12 @@ sotrudniki = {
 
 print('Добро пожаловать в Steam Company')
 otvet = input('1 - имена \n2 - самый эффективный сотрудник \n3 - должность сотрудника')
+while otvet != 'стоп':
+    if otvet == '1':
+        print('Имена всех сотрудников:')
+        for name in sotrudniki:
+            print(name)
+    otvet = input('1 - имена \n2 - самый эффективный сотрудник \n3 - должность сотрудника')
 
 
 
