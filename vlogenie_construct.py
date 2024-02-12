@@ -119,7 +119,7 @@ sotrudniki = {
     'Серьезный Сэм':
     {
         'должность': 'геймдизайнер',
-        'эффективность': 66,
+        'эффективность': 666,
         'проекты': ['Serios Sam','Worms']
     },
     'DoomGuy':
@@ -137,6 +137,21 @@ while otvet != 'стоп':
         print('Имена всех сотрудников:')
         for name in sotrudniki:
             print(name)
+    if otvet == '2':
+        samyi = ''
+        max_effectivnost = 0
+        for name in sotrudniki:
+            if sotrudniki[name]['эффективность'] > max_effectivnost:
+                max_effectivnost = sotrudniki[name]['эффективность']
+                samyi = name
+        print('Самый эффективный сотрудник:',samyi)
+    if otvet == '3':
+        name = input('Введите имя сотрудника')
+        if name in sotrudniki:
+            print('Должность:', sotrudniki[name]['должность'])
+        else:
+            print('У нас такие не работают')
+
     otvet = input('1 - имена \n2 - самый эффективный сотрудник \n3 - должность сотрудника')
 
 
