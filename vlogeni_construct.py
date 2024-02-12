@@ -37,3 +37,19 @@ trainings = {
        'дата': '20.11'
    }
 }
+print('Тренинги ProTeam')
+print('1-названия тренингов, 2-инфо о тренинге')
+action = input('Номер действия (off-выйти):')
+while action != 'off':
+   if action == '1':
+       for training in trainings:
+           print('-', training)
+   if action == '2':
+       title = input('Название тренинга:')
+       if title in trainings:
+           print(trainings[title]['ответственный'])
+           print(trainings[title]['темы'])
+           print(trainings[title]['дата'])
+       else:
+           print('Такого тренинга не существует!')
+   action = input('Номер действия (off-выйти):')
