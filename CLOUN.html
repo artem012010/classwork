@@ -47,17 +47,18 @@
     </div>
     <img src="https://mars.algoritmika.org/uploads/2021/02/mobile-phone-1419275_1920_0_1613586010.jpg" width="100%">
    </main>
+
+   <div class="social">
+    <a href=""><img src="https://mars.algoritmika.org/uploads/2021/02/icon-set-1142000_1280%201_0_1613586391.png"></a>
+    <a href=""><img src="https://mars.algoritmika.org/uploads/2021/02/Group%201_0_1613586391.png"></a>
+    <a href=""><img src="https://mars.algoritmika.org/uploads/2021/02/instagram-3288419_1280%201_0_1613586391.png"></a>
+   </div>
+
    <footer>
-    <img src="https://mars.algoritmika.org/uploads/2021/02/icon-set-1142000_1280%201_0_1613586391.png">
-    <img src="https://mars.algoritmika.org/uploads/2021/02/Group%201_0_1613586391.png">
-    <img src="https://mars.algoritmika.org/uploads/2021/02/instagram-3288419_1280%201_0_1613586391.png">
     <p>Напиши — получи  промокод!</p>
    </footer>
 </body>
 </html>
-
-
-
 
 
 
@@ -86,6 +87,10 @@ header a {
     color: black;
 }
 
+header a:hover {
+    background-color: white;
+}
+
 nav {
     display: flex;
     justify-content: space-around;
@@ -98,11 +103,14 @@ nav a {
     background-color: yellow;
     padding: 5px;
     text-decoration: none;
-
     text-align: center;
     border-radius: 15px;
     font-size: 20px;
     color: black;
+}
+
+nav a:hover {
+    background-color: white;
 }
 
 h1 {
@@ -127,6 +135,10 @@ h1 {
     padding: 10px;
 }
 
+.product:hover {
+    background-color: lightblue;
+}
+
 .product img {
     width: 300px;
     height: 200px;
@@ -142,6 +154,10 @@ h1 {
     color: black;
 }
 
+.product a:hover {
+    background-color: red;
+}
+
 footer {
     background: yellow;
     display: flex;
@@ -149,8 +165,17 @@ footer {
     font-size: 25px;
 }
 
-footer img {
-    width: 70px;
-    height: 70px;
-    margin-right: 30px ;
+.social img {
+    width: 40px;
+}
+
+.social {
+    background-color: yellow;
+    border-radius: 30px;
+    width: 50px;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    right: 10px;
+    top: 250px;
 }
