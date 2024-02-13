@@ -1,31 +1,21 @@
-months = 'январь февраль март апрель май июнь июль август сентябрь октябрь ноябрь декабрь'.split()
-sales = input('Введите данные о доходах с января по декабрь').split()
-sales = list(map(int, sales))
-growth = []
-fall = []
-for i in range(1, len(sales)):
-    if sales[i] > sales[i-1]:
-        growth.append(months[i])
-    if sales[i] < sales[i-1]:
-        fall.append(months[i])
-print('Месяцы роста доходов:', growth)
-print('Месяцы снижения доходов:', fall)
+#создай класс Converter
+class Converter():
+    def __init__(self,rub,usd):
+        self.rub = rub
+        self.usd =usd
 
+    def convert_usd(self,kurs):
+        print('Вы получите',self.usd * kurs,'р')
 
+    def convert_rub(self,kurs):
+        print('Вы получите',self.rub / kurs,'$')
 
-data = dict() 
-while input('Желаете посетить урок программирования (да/нет)?').lower() == 'да':
-    topic = input('Введите тему урока')
-    if topic in data:
-        data[topic] += 1 
-    else:
-        data[topic] = 1 
-
-
-total_lessons = 0
-for lesson in list(data.values()):
-    total_lessons += lesson
-total_topics = len(data)
-
-print('Общее количество уроков:', total_lessons)
-print('Рассмотрено тем:', total_topics)
+rub = int(input('Введите количество рублей'))
+usd = int(input('Введите количество долларов'))
+kurs = float(input('Введите курс валюты'))
+robot = Converter(rub,usd)
+otvet = input('Что вы хотите конвертировать руб\дол')
+if otvet == 'руб':
+    robot.convert_rub(kurs)
+if otvet == 'дол':
+    robot.convert_usd(kurs)
