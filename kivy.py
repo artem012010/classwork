@@ -15,3 +15,22 @@ class ScrButton(Button):
    def on_press(self):
        self.screen.manager.transition.direction = self.direction
        self.screen.manager.current = self.goal
+
+
+
+
+
+
+
+class MyApp(App):
+   def build(self):
+       sm = ScreenManager()
+       sm.add_widget(MainScr(name='main'))
+       sm.add_widget(FirstScr(name='first'))
+       sm.add_widget(SecondScr(name='second'))
+       sm.add_widget(ThirdScr(name='third'))
+       sm.add_widget(FourthScr(name='fourth'))
+ 
+       return sm
+ 
+MyApp().run()
