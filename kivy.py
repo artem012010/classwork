@@ -36,8 +36,13 @@ class MainScr(Screen):
 class FirstScr(Screen):
    def __init__(self, **kwargs):
        super().__init__(**kwargs)
+ 
+       vl = BoxLayout(orientation='vertical', size_hint=(.5, .5), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+       btn = Button(text= 'Выбор: 1', size_hint=(.5, 1), pos_hint={'left': 0})
        btn_back = ScrButton(self, direction='up', goal='main', text="Назад", size_hint=(.5, 1), pos_hint={'right': 1})
-       self.add_widget(btn_back)
+       vl.add_widget(btn)
+       vl.add_widget(btn_back)
+       self.add_widget(vl)
 
 class SecondScr(Screen):
    def __init__(self, **kwargs):
