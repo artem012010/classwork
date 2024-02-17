@@ -5,7 +5,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.scrollview import ScrollView
-
+ 
 class ScrButton(Button):
    def __init__(self, screen, direction='right', goal='main', **kwargs):
        super().__init__(**kwargs)
@@ -15,11 +15,11 @@ class ScrButton(Button):
    def on_press(self):
        self.screen.manager.transition.direction = self.direction
        self.screen.manager.current = self.goal
-
+      
 class MainScr(Screen):
    def __init__(self, **kwargs):
        super().__init__(**kwargs)
-
+ 
        vl = BoxLayout(orientation='vertical', padding=8, spacing=8)
        hl = BoxLayout()
        txt = Label(text= 'Выбери экран')
@@ -32,7 +32,7 @@ class MainScr(Screen):
        hl.add_widget(txt)
        hl.add_widget(vl)
        self.add_widget(hl)
-
+ 
 class FirstScr(Screen):
    def __init__(self, **kwargs):
        super().__init__(**kwargs)
@@ -43,7 +43,7 @@ class FirstScr(Screen):
        vl.add_widget(btn)
        vl.add_widget(btn_back)
        self.add_widget(vl)
-
+ 
 class SecondScr(Screen):
    def __init__(self, **kwargs):
        super().__init__(**kwargs)
@@ -67,19 +67,41 @@ class SecondScr(Screen):
        btn_false.on_press = self.change_text
  
    def change_text(self):
-       self.txt.text = self.input.text + '? Не сработало ...'   
-
+       self.txt.text = self.input.text + '? Не сработало ...'       
+ 
+ 
 class ThirdScr(Screen):
    def __init__(self, **kwargs):
        super().__init__(**kwargs)
-       btn_back = ScrButton(self, direction='up', goal='main', text="Назад", size_hint=(.5, 1), pos_hint={'right': 1})
-       self.add_widget(btn_back)
+ 
+       layout = BoxLayout(orientation='vertical')
+       btn_back = ScrButton(self, direction='down', goal='main', text="Назад", size_hint=(1, None), height='40sp')
+       test_label = Label(text = "Твой собственный экран")
+       layout.add_widget(test_label)
+       layout.add_widget(btn_back)
+       self.add_widget(layout)
 
 class FourthScr(Screen):
    def __init__(self, **kwargs):
        super().__init__(**kwargs)
-       btn_back = ScrButton(self, direction='up', goal='main', text="Назад", size_hint=(.5, 1), pos_hint={'right': 1})
-       self.add_widget(btn_back)
+       vl = BoxLayout(orientation='vertical', spacing=8)
+       a = 'START ' + 'Выбор: 3 ' * 200
+       test_label = Label(text = "Дополнительное задание",size_hint=(0.3,None))
+       btn_back = ScrButton(self, direction='left', goal='main', text="Назад", size_hint=(1, .2), pos_hint={'center-x': 0.5})
+       self.label = Label(text=a, size_hint_y=None, font_size='24sp', halign='left', valign='top')  
+       self.label.bind(size=self.resize)
+       self.scroll = ScrollView(size_hint=(1, 1))
+       self.scroll.add_widget(self.label)
+
+       vl.add_widget(test_label)
+       vl.add_widget(btn_back)
+       vl.add_widget(self.scroll)
+       self.add_widget(vl)
+ 
+   def resize(self, *args):
+       self.label.text_size = (self.label.width, None)
+       self.label.texture_update()
+       self.label.height = self.label.texture_size[1]
 
 class MyApp(App):
    def build(self):
@@ -93,3 +115,4 @@ class MyApp(App):
        return sm
  
 MyApp().run()
+
