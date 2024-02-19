@@ -24,5 +24,15 @@ line.addWidget(winner, alignment = Qt.AlignCenter)
 line.addWidget(button, alignment = Qt.AlignCenter)
 my_win.setLayout(line)
  
+#функция, которая генерирует и показывает число
+def show_winner():
+    number = randint(0, 99)
+    winner.setText(str(number))
+    text.setText('Победитель:')
+ 
+#обработка нажатия на кнопку
+button.clicked.connect(show_winner)
+
+
 my_win.show()
 app.exec_()
