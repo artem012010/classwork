@@ -1,49 +1,26 @@
-class Button():
-    def __init__(self, title, x, y):
-        self.title = title
-        self.x = x
-        self.y = y
-        self.appearance = True
-    def hide(self ):
-        self.appearance = False
-    def show(self ):
-        self.appearance = True
-    def print_status( self):
-        print('Данные о виджете:')
-        print(self.title, self.x, self.y, self.appearance)
+class Widget():
+    def __init__(self, title_text, x_num, y_num):
+        self.title = title_text
+        self.x = x_num
+        self.y = y_num
 
-ok_button = Button('ok', 100, 100)
-ok_button.print_status()
-ok_button.hide()
-ok_button.print_status()
+    def print_info(self):
+        print('Надпись:', self.title)
+        print('Расположение:', self.x, self.y)
 
+class Button(Widget):
+    def __init__(self, title_text, x_num, y_num, is_clicked_bool):
+        super().__init__(title_text, x_num, y_num)
+        self.is_clicked = is_clicked_bool
 
+    def click(self):
+        self.is_clicked = True
+        print('Вы зарегистрированы')
 
-class Title():
-    #конструктор
-    def __init__(self,text,x,y,vision):
-        self.text = text
-        self.x = x
-        self.y = y
-        self.vision = vision
-    
-    def info(self):
-        print('Кнопка',self.text)
-        print('Расположение',self.x,self.y)
-        print('Видимость',self.vision)
-
-    def off(self):
-        self.vision = False
-        print('Выключили кнопку')
-
-    def on(self):
-        self.vision = True
-        print('Включили кнопку')
-
-#создай две надписи
-button1 = Title('Купить',-50,100,True)
-button2 = Title('Продать',-50,-100,True)
-#скрой вторую надпись
-print('Кнопка включена?', button2.vision)
-button2.off()
-print('Кнопка включена?', button2.vision)
+lotery_button = Button('Участвовать', 100, 100, False)
+lotery_button.print_info()
+answer = input('Хотите зарегистрироваться? (да/нет): ')
+if answer == 'да':
+    lotery_button.click()
+else:
+    print('А жаль!')
