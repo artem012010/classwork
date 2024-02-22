@@ -79,8 +79,24 @@ class ThirdScr(Screen):
 class FourthScr(Screen):
    def __init__(self, **kwargs):
        super().__init__(**kwargs)
-       btn_back = ScrButton(self, direction='down', goal='main', text="Назад")
-       self.add_widget(btn_back)
+       vl = BoxLayout(orientation='vertical', spacing=8)
+       a = 'START ' + 'Выбор: 3 ' * 200
+       test_label = Label(text = "Дополнительное задание",size_hint=(0.3,None))
+       btn_back = ScrButton(self, direction='left', goal='main', text="Назад", size_hint=(1, .2), pos_hint={'center-x': 0.5})
+       self.label = Label(text=a, size_hint_y=None, font_size='24sp', halign='left', valign='top')  
+       self.label.bind(size=self.resize)
+       self.scroll = ScrollView(size_hint=(1, 1))
+       self.scroll.add_widget(self.label)
+
+       vl.add_widget(test_label)
+       vl.add_widget(btn_back)
+       vl.add_widget(self.scroll)
+       self.add_widget(vl)
+ 
+   def resize(self, *args):
+       self.label.text_size = (self.label.width, None)
+       self.label.texture_update()
+       self.label.height = self.label.texture_size[1]
 
 class MyApp(App):
    def build(self):
@@ -89,6 +105,6 @@ class MyApp(App):
        sm.add_widget(FirstScr(name='first'))
        sm.add_widget(SecondScr(name='second'))
        sm.add_widget(ThirdScr(name='third'))
-       sm.add_widget(MainScr(name='fourth'))
+       sm.add_widget(FourthScr(name='fourth'))
        return sm
 MyApp().run()
