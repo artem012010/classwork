@@ -69,9 +69,13 @@ class SecondScr(Screen):
 class ThirdScr(Screen):
    def __init__(self, **kwargs):
        super().__init__(**kwargs)
-       btn_back = ScrButton(self, direction='down', goal='main', text="Назад")
-       self.add_widget(btn_back)
-
+       layout = BoxLayout(orientation='vertical')
+       btn_back = ScrButton(self, direction='down', goal='main', text="Назад", size_hint=(1, None), height='40sp')
+       test_label = Label(text = "Твой собственный экран")
+       layout.add_widget(test_label)
+       layout.add_widget(btn_back)
+       self.add_widget(layout)
+       
 class FourthScr(Screen):
    def __init__(self, **kwargs):
        super().__init__(**kwargs)
@@ -84,7 +88,7 @@ class MyApp(App):
        sm.add_widget(MainScr(name='main'))
        sm.add_widget(FirstScr(name='first'))
        sm.add_widget(SecondScr(name='second'))
-       sm.add_widget(MainScr(name='third'))
+       sm.add_widget(ThirdScr(name='third'))
        sm.add_widget(MainScr(name='fourth'))
        return sm
 MyApp().run()
