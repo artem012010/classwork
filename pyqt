@@ -1,6 +1,17 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QLabel, QMessageBox, QRadioButton
+from PyQt5.QtWidgets import QApplication, QWidget,  QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QMessageBox, QRadioButton
+ 
+def show_win():
+   victory_win = QMessageBox()
+   victory_win.setText('Верно!\nВы выиграли гироскутер')
+   victory_win.exec_()
 
+
+def show_lose():
+   victory_win = QMessageBox()
+   victory_win.setText('Нет, в 2015 году\nВы выиграли фирменный плакат')
+   victory_win.exec_()
+ 
 app = QApplication([])
 main_win = QWidget()
 main_win.setWindowTitle('Конкурс от Crazy People')
@@ -30,5 +41,10 @@ layout_main.addLayout(layoutH3)
 
 main_win.setLayout(layout_main)
  
-main_win.show() # Показать окно
-app.exec_() # Закрытие по крестику
+btn_answer3.clicked.connect(show_win)
+btn_answer1.clicked.connect(show_lose)
+btn_answer2.clicked.connect(show_lose)
+btn_answer4.clicked.connect(show_lose)
+ 
+main_win.show()
+app.exec_()
