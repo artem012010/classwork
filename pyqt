@@ -29,6 +29,15 @@ layout_ans1.addLayout(layout_ans2)
 layout_ans1.addLayout(layout_ans3)
 
 RadioGroupBox.setLayout(layout_ans1)
+# Создаем панель результата
+AnsGroupBox = QGroupBox("Результат теста")
+lb_Result = QLabel('прав ты или нет?') # здесь размещается надпись "правильно" или "неправильно"
+lb_Correct = QLabel('ответ будет тут!') # здесь будет написан текст правильного ответа
+
+layout_res = QVBoxLayout()
+layout_res.addWidget(lb_Result, alignment=(Qt.AlignLeft | Qt.AlignTop))
+layout_res.addWidget(lb_Correct, alignment=Qt.AlignHCenter, stretch=2)
+AnsGroupBox.setLayout(layout_res)
 
 # Размещаем все виджеты в окне:
 layout_line1 = QHBoxLayout() # вопрос
@@ -38,6 +47,7 @@ layout_line3 = QHBoxLayout() # кнопка "Ответить"
 layout_line1.addWidget(lb_Question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter))
 # Размещаем в одной строке обе панели, одна из них будет скрываться, другая показываться:
 layout_line2.addWidget(RadioGroupBox)   
+layout_line2.addWidget(AnsGroupBox)
 RadioGroupBox.show() # эту панель мы уже видели, скроем, посмотрим, как получилась панель с ответом
 
 layout_line3.addStretch(1)
