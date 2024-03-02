@@ -2,16 +2,15 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
         QApplication, QWidget, 
         QHBoxLayout, QVBoxLayout, 
-        QGroupBox, QRadioButton,  
+        QGroupBox, QButtonGroup, QRadioButton,  
         QPushButton, QLabel)
 
 
 app = QApplication([])
 
 
-# Создаем панель вопроса
-btn_OK = QPushButton('Ответить')
-lb_Question = QLabel('Самый сложный вопрос в мире!')
+btn_OK = QPushButton('Ответить') 
+lb_Question = QLabel('Самый сложный вопрос в мире!') 
 
 
 RadioGroupBox = QGroupBox("Варианты ответов")
@@ -23,12 +22,19 @@ rbtn_3 = QRadioButton('Вариант 3')
 rbtn_4 = QRadioButton('Вариант 4')
 
 
+RadioGroup = QButtonGroup() 
+RadioGroup.addButton(rbtn_1)
+RadioGroup.addButton(rbtn_2)
+RadioGroup.addButton(rbtn_3)
+RadioGroup.addButton(rbtn_4)
+
+
 layout_ans1 = QHBoxLayout()   
 layout_ans2 = QVBoxLayout()
 layout_ans3 = QVBoxLayout()
-layout_ans2.addWidget(rbtn_1) # два ответа в первый столбец
+layout_ans2.addWidget(rbtn_1) 
 layout_ans2.addWidget(rbtn_2)
-layout_ans3.addWidget(rbtn_3) # два ответа во второй столбец
+layout_ans3.addWidget(rbtn_3) 
 layout_ans3.addWidget(rbtn_4)
 
 
@@ -39,29 +45,24 @@ layout_ans1.addLayout(layout_ans3)
 RadioGroupBox.setLayout(layout_ans1)
 
 
-# Создаем панель результата
 AnsGroupBox = QGroupBox("Результат теста")
-lb_Result = QLabel('прав ты или нет?') # здесь размещается надпись "правильно" или "неправильно"
-lb_Correct = QLabel('ответ будет тут!') # здесь будет написан текст правильного ответа
-
-
+lb_Result = QLabel('прав ты или нет?') 
+lb_Correct = QLabel('ответ будет тут!')
 layout_res = QVBoxLayout()
 layout_res.addWidget(lb_Result, alignment=(Qt.AlignLeft | Qt.AlignTop))
 layout_res.addWidget(lb_Correct, alignment=Qt.AlignHCenter, stretch=2)
 AnsGroupBox.setLayout(layout_res)
 
 
-# Размещаем все виджеты в окне:
-layout_line1 = QHBoxLayout() # вопрос
-layout_line2 = QHBoxLayout() # варианты ответов или результат теста
-layout_line3 = QHBoxLayout() # кнопка "Ответить"
+layout_line1 = QHBoxLayout() 
+layout_line2 = QHBoxLayout() 
+layout_line3 = QHBoxLayout() 
 
 
 layout_line1.addWidget(lb_Question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter))
-# Размещаем в одной строке обе панели, одна из них будет скрываться, другая показываться:
 layout_line2.addWidget(RadioGroupBox)   
 layout_line2.addWidget(AnsGroupBox)  
-RadioGroupBox.hide() # эту панель мы уже видели, скроем, посмотрим, как получилась панель с ответом
+AnsGroupBox.hide()
 
 
 layout_line3.addStretch(1)
@@ -69,7 +70,6 @@ layout_line3.addWidget(btn_OK, stretch=2) # кнопка должна быть �
 layout_line3.addStretch(1)
 
 
-# Теперь созданные строки разместим друг под другой:
 layout_card = QVBoxLayout()
 
 
@@ -81,10 +81,32 @@ layout_card.addStretch(1)
 layout_card.setSpacing(5) # пробелы между содержимым
 
 
+# ----------------------------------------------------------
+# Виджеты и макеты созданы, далее - функции:
+# ----------------------------------------------------------
+
+
+def show_result():
+    RadioGroupBox.hide()
+    AnsGroupBox.show()
+    btn_OK.setText('Следующий вопрос')
+
+def show_question():
+    RadioGroupBox.show()
+    AnsGroupBox.hide()
+    btn_OK.setText('Ответить')
+
+def test():
+    if 'Ответить' == btn_OK.text():
+        show_result()
+    else:
+        show_question()
+
+btn_OK.clicked.connect(test)
+
 window = QWidget()
 window.setLayout(layout_card)
-window.setWindowTitle('Memory Card')
+window.setWindowTitle('Memo Card')
+ # проверяем, что панель ответов показывается при нажатии на кнопку
 window.show()
-
-
 app.exec()
