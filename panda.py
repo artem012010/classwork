@@ -18,3 +18,6 @@ print(df[df['Type'] == 'Paid'].pivot_table(columns = 'Content Rating', index = '
 # Бонусная задача. Найди категории бесплатных (Type == 'Free') приложений,
 # в которых приложения разработаны не для всех возрастных групп ('Content Rating')
 print(df[df['Type'] == 'Free'].pivot_table(index = 'Category', columns = 'Content Rating', values = 'Reviews', aggfunc = 'mean'))
+
+
+https://gartic.io/055Oj11K
