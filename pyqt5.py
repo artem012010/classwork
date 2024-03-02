@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import (
         QGroupBox, QButtonGroup, QRadioButton,  
         QPushButton, QLabel)
 
+from random import shuffle
+
 
 app = QApplication([])
 
@@ -96,13 +98,27 @@ def show_question():
     AnsGroupBox.hide()
     btn_OK.setText('Ответить')
 
-def test():
-    if 'Ответить' == btn_OK.text():
+def check_answer():
+    if buttons[0].isChecked():
+        lb_Result.setText('Правильно')
         show_result()
     else:
-        show_question()
+        lb_Result.setText('Неверно')
+        show_result()
 
-btn_OK.clicked.connect(test)
+buttons = [rbtn_1,rbtn_2,rbtn_3,rbtn_4]
+def ask(question, right_answer, wrong1, wrong2, wrong3):
+    shuffle(buttons)
+    buttons[0].setText(right_answer)
+    buttons[1].setText(wrong1)
+    buttons[2].setText(wrong2)
+    buttons[3].setText(wrong3)
+    lb_Question.setText(question)
+    lb_Correct.setText(right_answer) 
+    show_question() 
+
+ask('Государственный язык Бразилии', 'Португальский', 'Бразильский', 'Испанский', 'Итальянский')
+btn_OK.clicked.connect(check_answer)
 
 window = QWidget()
 window.setLayout(layout_card)
