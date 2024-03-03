@@ -1,23 +1,26 @@
 import pandas as pd
-df = pd.read_csv('GoogleApps.csv')
+df = pd.read_csv('GooglePlayStore_wild.csv')
+print(df.info())
+print(len(df[pd.isnull(df['Rating'])]))
+df['Rating'].fillna(-1, inplace = True)
 
-# 1 Выведи на экран минимальный, средний и максимальный рейтинг ('Rating') платных и бесплатных приложений ('Type') с точностью до десятых.
-print(round(df.groupby(by = 'Type')['Rating'].agg(['min', 'mean', 'max']), 1))
+print(df['Size'].value_counts())
+def set_size(size):
+   if size[-1] == 'M':
+      return float(size[:-1]) 
+   elif size[-1] == 'k':
+      return float(size[:-1]) / 1024
+   return -1
+df['Size'] = df['Size'].apply(set_size)
+print(df[df['Category'] == 'TOOLS']['Size'].max())
 
-# 2 Выведи на экран минимальную, медианную (median) и максимальную цену ('Price') платных приложений (Type == 'Paid') для # разных целевых аудиторий ('Content Rating')
-print(df[df['Type'] == 'Paid'].groupby(by = 'Content Rating')['Price'].agg(['min', 'median', 'max']))
+def set_installs(installs):
+   if installs == '0':
+       return 0
+   return int(installs[:-1].replace(',', ''))
+df['Installs'] = df['Installs'].apply(set_installs)
 
-# 3 Сгруппируй данные по категории ('Category') и целевой аудитории ('Content Rating') любым удобным для тебя способом
-
-temp = df.pivot_table(index = 'Content Rating', columns = 'Category', values = 'Reviews', aggfunc = 'max')
-print(temp[['EDUCATION', 'FAMILY', 'GAME']])
-
-# 4 Сгруппируй платные (Type == 'Paid') приложения по категории ('Category') и целевой аудитории ('Content Rating')
-print(df[df['Type'] == 'Paid'].pivot_table(columns = 'Content Rating', index = 'Category', values = 'Reviews', aggfunc = 'mean'))
-
-# Бонусная задача. Найди категории бесплатных (Type == 'Free') приложений,
-# в которых приложения разработаны не для всех возрастных групп ('Content Rating')
-print(df[df['Type'] == 'Free'].pivot_table(index = 'Category', columns = 'Content Rating', values = 'Reviews', aggfunc = 'mean'))
-
-
-https://gartic.io/055Oj11K
+print(round(df.pivot_table(index = 'Content Rating', columns = 'Type', values = 'Installs', aggfunc = 'mean')), 1)
+print(df[pd.isnull(df['Type'])])
+df['Type'].fillna('Free', inplace = True)
+print(df.info())
