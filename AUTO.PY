@@ -1,1 +1,1 @@
-https://garticphone.com/ru/?c=02f1bfe8f3
+https://garticphone.com/ru/?c=02c3e592a7
