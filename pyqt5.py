@@ -7,20 +7,21 @@ from PyQt5.QtWidgets import (
 from random import shuffle
 
 
+class Question():
+    def __init__(self, question, right_answer, wrong1, wrong2, wrong3):
+        # все строки надо задать при создании объекта, они запоминаются в свойства
+        self.question = question
+        self.right_answer = right_answer
+        self.wrong1 = wrong1
+        self.wrong2 = wrong2
+        self.wrong3 = wrong3
+
 
 questions_list = [] 
 questions_list.append(Question('Государственный язык Бразилии', 'Португальский', 'Английский', 'Испанский', 'Бразильский'))
 questions_list.append(Question('Какого цвета нет на флаге России?', 'Зелёный', 'Красный', 'Белый', 'Синий'))
 questions_list.append(Question('Национальная хижина якутов', 'Ураса', 'Юрта', 'Иглу', 'Хата'))
 
-
-class Question():
-    def __init__(self, question, right_answer, wrong1, wrong2, wrong3):
-        self.question = question
-        self.right_answer = right_answer
-        self.wrong1 = wrong1
-        self.wrong2 = wrong2
-        self.wrong3 = wrong3
 
 app = QApplication([])
 
@@ -111,6 +112,7 @@ def show_question():
     RadioGroupBox.show()
     AnsGroupBox.hide()
     btn_OK.setText('Ответить')
+    # сбросить выбранную радио-кнопку
     RadioGroup.setExclusive(False) # сняли ограничения, чтобы можно было сбросить выбор радиокнопки
     rbtn_1.setChecked(False)
     rbtn_2.setChecked(False)
@@ -123,6 +125,8 @@ answers = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
 
 
 def ask(q: Question):
+    ''' функция записывает значения вопроса и ответов в соответствующие виджеты, 
+    при этом варианты ответов распределяются случайным образом'''
     shuffle(answers) # перемешали список из кнопок, теперь на первом месте списка какая-то непредсказуемая кнопка
     answers[0].setText(q.right_answer) # первый элемент списка заполним правильным ответом, остальные - неверными
     answers[1].setText(q.wrong1)
@@ -140,24 +144,32 @@ def show_correct(res):
 
 
 def check_answer():
-    ''' если выбран какой-то вариант ответа, то надо проверить и показать панель ответов'''
     if answers[0].isChecked():
-        # правильный ответ!
         show_correct('Правильно!')
     else:
         if answers[1].isChecked() or answers[2].isChecked() or answers[3].isChecked():
-            # неправильный ответ!
             show_correct('Неверно!')
+
+def next_question():
+    window.cur_question += 1
+    if window.cur_question >= len(questions_list):
+        window.cur_question = 0 # если список вопросов закончился - идем сначала
+    q = questions_list[window.cur_question] # взяли вопрос
+    ask(q) # спросили
+
+def click_OK():
+    if btn_OK.text() == 'Ответить':
+        check_answer() # проверка ответа
+    else:
+        next_question() # следующий вопрос
 
 
 window = QWidget()
 window.setLayout(layout_card)
 window.setWindowTitle('Memo Card')
-q = Question('Выбери перевод слова "переменная"', 'variable', 'variation', 'variant', 'changing')
-ask(q)
-btn_OK.clicked.connect(check_answer) # убрали тест, здесь нужна проверка ответа
+window.cur_question = -1   
+btn_OK.clicked.connect(click_OK) 
+next_question()
+window.resize(400, 300)
 window.show()
 app.exec()
-
-
-
