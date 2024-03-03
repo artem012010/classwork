@@ -7,6 +7,12 @@ from PyQt5.QtWidgets import (
 from random import shuffle
 
 
+questions_list = [] 
+questions_list.append(Question('Государственный язык Бразилии', 'Португальский', 'Английский', 'Испанский', 'Бразильский'))
+questions_list.append(Question('Какого цвета нет на флаге России?', 'Зелёный', 'Красный', 'Белый', 'Синий'))
+questions_list.append(Question('Национальная хижина якутов', 'Ураса', 'Юрта', 'Иглу', 'Хата'))
+
+
 class Question():
     def __init__(self, question, right_answer, wrong1, wrong2, wrong3):
         self.question = question
