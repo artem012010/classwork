@@ -14,6 +14,10 @@ class Question():
         self.wrong2 = wrong2
         self.wrong3 = wrong3
 
+questions_list = [] 
+questions_list.append(Question('Государственный язык Бразилии', 'Португальский', 'Английский', 'Испанский', 'Бразильский'))
+questions_list.append(Question('Какого цвета нет на флаге России?', 'Зелёный', 'Красный', 'Белый', 'Синий'))
+questions_list.append(Question('Национальная хижина якутов', 'Ураса', 'Юрта', 'Иглу', 'Хата'))
 
 
 app = QApplication([])
