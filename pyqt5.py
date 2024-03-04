@@ -6,10 +6,8 @@ from PyQt5.QtWidgets import (
         QPushButton, QLabel)
 from random import shuffle
 
-
 class Question():
     def __init__(self, question, right_answer, wrong1, wrong2, wrong3):
-        # все строки надо задать при создании объекта, они запоминаются в свойства
         self.question = question
         self.right_answer = right_answer
         self.wrong1 = wrong1
@@ -17,12 +15,9 @@ class Question():
         self.wrong3 = wrong3
 
 
-questions_list = [] 
-questions_list.append(Question('Государственный язык Бразилии', 'Португальский', 'Английский', 'Испанский', 'Бразильский'))
-questions_list.append(Question('Какого цвета нет на флаге России?', 'Зелёный', 'Красный', 'Белый', 'Синий'))
-questions_list.append(Question('Национальная хижина якутов', 'Ураса', 'Юрта', 'Иглу', 'Хата'))
 
 app = QApplication([])
+
 
 btn_OK = QPushButton('Ответить') # кнопка ответа
 lb_Question = QLabel('Самый сложный вопрос в мире!') # текст вопроса
@@ -110,7 +105,6 @@ def show_question():
     RadioGroupBox.show()
     AnsGroupBox.hide()
     btn_OK.setText('Ответить')
-    # сбросить выбранную радио-кнопку
     RadioGroup.setExclusive(False) # сняли ограничения, чтобы можно было сбросить выбор радиокнопки
     rbtn_1.setChecked(False)
     rbtn_2.setChecked(False)
@@ -132,7 +126,6 @@ def ask(q: Question):
     lb_Correct.setText(q.right_answer) # ответ 
     show_question() # показываем панель вопросов 
 
-
 def show_correct(res):
     ''' показать результат - установим переданный текст в надпись "результат" и покажем нужную панель '''
     lb_Result.setText(res)
@@ -140,31 +133,24 @@ def show_correct(res):
 
 
 def check_answer():
+    ''' если выбран какой-то вариант ответа, то надо проверить и показать панель ответов'''
     if answers[0].isChecked():
+        # правильный ответ!
         show_correct('Правильно!')
     else:
         if answers[1].isChecked() or answers[2].isChecked() or answers[3].isChecked():
+            # неправильный ответ!
             show_correct('Неверно!')
 
-def next_question():
-    window.cur_question += 1
-    if window.cur_question >= len(questions_list):
-        window.cur_question = 0 # если список вопросов закончился - идем сначала
-    q = questions_list[window.cur_question] # взяли вопрос
-    ask(q) # спросили
-
-def click_OK():
-    if btn_OK.text() == 'Ответить':
-        check_answer() # проверка ответа
-    else:
-        next_question() # следующий вопрос
 
 window = QWidget()
 window.setLayout(layout_card)
 window.setWindowTitle('Memo Card')
-window.cur_question = -1   
-btn_OK.clicked.connect(click_OK) 
-next_question()
-window.resize(400, 300)
+q = Question('Выбери перевод слова "переменная"', 'variable', 'variation', 'variant', 'changing')
+ask(q)
+btn_OK.clicked.connect(check_answer) # убрали тест, здесь нужна проверка ответа
 window.show()
 app.exec()
+
+
+
