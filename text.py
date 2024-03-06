@@ -20,3 +20,26 @@ while True:
 with open('quotes.txt', 'r', encoding='UTF-8') as file:
     data = file.read()
     print(data)
+
+
+
+
+
+
+
+
+
+summa = 0
+kolvo = 0
+otlichniki = []
+
+with open('pupils.txt','r',encoding='UTF-8') as file:
+    for pupil in file:
+        pupil = pupil.split()
+        summa += int(pupil[2])
+        kolvo += 1
+        if pupil[2] == '5':
+            otlichniki.append(pupil[0])
+
+print('Средний балл',summa/kolvo)
+print('Список отличников:',otlichniki)
