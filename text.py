@@ -12,7 +12,11 @@ while True:
         quote = input("Введите цитату: ")
         author = input("Введите автора: ")
         file = open("quotes.txt", "a",  encoding = "UTF-8")
-        file.write(quote+"\n"+"("+author+")"+"\n")
+        file.write(quote+"\n"+"Автор:"+author+"\n")
         file.close()
     else:
         break
+
+with open('quotes.txt', 'r', encoding='UTF-8') as file:
+    data = file.read()
+    print(data)
