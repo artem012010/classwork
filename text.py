@@ -43,3 +43,31 @@ with open('pupils.txt','r',encoding='UTF-8') as file:
 
 print('Средний балл',summa/kolvo)
 print('Список отличников:',otlichniki)
+
+
+
+
+
+
+
+from time import time
+
+summa = 0
+kolvo = 0
+otlichniki = []
+
+start = time() 
+
+with open('pupils_large.txt','r',encoding='UTF-8') as file:
+    for pupil in file:
+        pupil = pupil.split()
+        summa += int(pupil[2])
+        kolvo += 1
+        if pupil[2] == '5':
+            otlichniki.append(pupil[0])
+
+end = time()
+
+print('Средний балл',summa/kolvo)
+print('Количество отличников:',len(otlichniki))
+print('Прошло',round(end - start,1),'c')
