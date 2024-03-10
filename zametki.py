@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication,QWidget,QPushButton,QLabel,QVBoxLayout,QHBoxLayout,QListWidget,QTextEdit,QLineEdit
+from PyQt5.QtWidgets import QApplication,QWidget,QPushButton,QVBoxLayout,QHBoxLayout,QListWidget,QTextEdit,QLineEdit
 
 app = QApplication([]) # Создаем приложение
 '''СОЗДАНИЕ ЭЛЕМЕНТОВ ИНТЕРФЕЙСА'''
