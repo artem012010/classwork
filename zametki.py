@@ -12,5 +12,5 @@ main_layout.addWidget(text_field) # Добовляем в него виджет 
 
 
 window.setLayout(main_layout) # Устанавливаем главную линию к окну
-window.show()
-app.exec()
+window.show() # Показать окно
+app.exec() # Не закрывать до нажатия крестика
