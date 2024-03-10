@@ -1,50 +1,34 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication,QWidget,QPushButton,QVBoxLayout,QHBoxLayout,QListWidget,QTextEdit,QLineEdit
-
-app = QApplication([]) # Создаем приложение
-'''СОЗДАНИЕ ЭЛЕМЕНТОВ ИНТЕРФЕЙСА'''
-window = QWidget() # Создаем окошко
-window.setWindowTitle('Умные заметки') # Добовляем название окна
-window.resize(900,600)
-text_field = QTextEdit() # Поле с текстом
-notes_list = QListWidget() # Список с заметками
+from PyQt5.QtWidgets import (
+    QApplication,QWidget,QPushButton,QTextEdit,
+    QLineEdit,QListWidget,QVBoxLayout,QHBoxLayout
+)
+# НАСТРОЙКА ОКНА
+app = QApplication([]) # создаем приложение
+window = QWidget() # создаем окно
+window.setWindowTitle('Умные заметки') # Меняем название окна
+window.resize(900,600) # Меняем размер окна
+# СОЗДАНИЕ ЭЛЕМЕНТОВ ИНТЕРФЕЙСА
+text_field = QTextEdit() # Текстовое поле
+notes_list = QListWidget() # Создаем список с заметками
 create_note = QPushButton('Создать заметку')
 delete_note = QPushButton('Удалить заметку')
-save_note = QPushButton('Сохранить заметку')
-tag_list = QListWidget() # Список с тегами
-add_tag = QPushButton('Добавить тег')
-delete_tag = QPushButton('Удалить тег')
-search = QPushButton('Поиск')
-tag_field = QLineEdit()
-tag_field.setPlaceholderText('Введите тег . . .')
-'''РАСПОЛОЖЕНИЕ ВИДЖЕТОВ'''
-main_layout = QHBoxLayout() # Создаем главную линию
-text_layout = QVBoxLayout() # Создаем линию для поля ввода текста
-text_layout.addWidget(text_field) # Добавляем виджет
-main_layout.addLayout(text_layout) # Закрепляем линию с текстом на главной линии
-list_layout = QVBoxLayout() # Создаем линию для списков
-list_layout.addWidget(notes_list)
+save_note = QPushButton('Сохранть заметку')
+#РАЗМЕЩЕНИЕ ВИДЖЕТОВ
+main_layout = QHBoxLayout() # Создаем главную горизонтальную линию
+v1 = QVBoxLayout() # Вертикальная линия для поля с текстом
+v2 = QVBoxLayout() # Вертикальная линия для списков
+h1 = QHBoxLayout() # Горизонтальная линия для кнопок сохранить и удалить
+h2 = QHBoxLayout() # Горизонтальная линия для кнопок добавить и открепить
+v1.addWidget(text_field) 
+v2.addWidget(notes_list)
+h1.addWidget(create_note)
+h1.addWidget(delete_note)
+v2.addLayout(h1)
+v2.addWidget(save_note)
+main_layout.addLayout(v1) # Добавляем линию с полем ввода текста на главную линию
+main_layout.addLayout(v2) # Добавляем линию со списками на главную линию
+window.setLayout(main_layout) # Добавляем главную линию к окну
 
-list_buttons_layout = QHBoxLayout()
-list_buttons_layout.addWidget(create_note)
-list_buttons_layout.addWidget(delete_note)
-list_layout.addLayout(list_buttons_layout)
 
-list_layout.addWidget(save_note)
-
-list_layout.addWidget(tag_list)
-list_layout.addWidget(add_tag)
-list_layout.addWidget(delete_tag)
-
-list_tags_layout = QHBoxLayout()
-list_tags_layout.addWidget(add_tag)
-list_tags_layout.addWidget(delete_tag)
-list_layout.addLayout(list_tags_layout)
-
-list_layout.addWidget(tag_field)
-list_layout.addWidget(search)
-main_layout.addLayout(list_layout)
-'''ЗАПУСК'''
-window.setLayout(main_layout) # Устанавливаем главную линию к окну
-window.show() # Показать окно
-app.exec() # Не закрывать до нажатия крестика
+window.show() # показываем окно
+app.exec() # просим приложение не закрываться до нажатия на крестик
