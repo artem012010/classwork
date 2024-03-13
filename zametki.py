@@ -1,51 +1,99 @@
-from PyQt5.QtWidgets import (
-    QApplication, QWidget, QPushButton,
-    QTextEdit,QLineEdit,QListWidget,
-    QVBoxLayout,QHBoxLayout)
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QListWidget, QLineEdit, QTextEdit, QInputDialog, QHBoxLayout, QVBoxLayout, QFormLayout
 
-'''ИНТЕРФЕЙС'''
+
+import json
+
+
 app = QApplication([])
-window = QWidget()
-window.setWindowTitle('Умные заметки')
-window.resize(900,600)
 
-text_field = QTextEdit()
 
-notes_list = QListWidget()
-create_note = QPushButton('Создать заметку')
-delete_note = QPushButton('Удалить заметку')
-save_note = QPushButton('Сохранить заметку')
+'''Интерфейс приложения'''
+#параметры окна приложения
+notes_win = QWidget()
+notes_win.setWindowTitle('Умные заметки')
+notes_win.resize(900, 600)
 
-tags_list = QListWidget()
-create_tag = QPushButton('Добавить тег')
-delete_tag = QPushButton('Удалить тег')
-search = QPushButton('Поиск:')
-search_field = QLineEdit()
 
-'''РАЗМЕЩЕНИЕ'''
-main_layout = QHBoxLayout()
-v1 = QVBoxLayout()
-v2 = QVBoxLayout()
-h1 = QHBoxLayout()
-h2 = QHBoxLayout()
-h3 = QHBoxLayout()
-v1.addWidget(text_field)
-v2.addWidget(notes_list)
-h1.addWidget(create_note)
-h1.addWidget(delete_note)
-v2.addLayout(h1)
-v2.addWidget(save_note)
-v2.addWidget(tags_list)
-h3.addWidget(create_tag)
-h3.addWidget(delete_tag)
-v2.addLayout(h2)
-h2.addWidget(search)
-h2.addWidget(search_field)
-v2.addLayout(h3)
+#виджеты окна приложения
+list_notes = QListWidget()
+list_notes_label = QLabel('Список заметок')
 
-main_layout.addLayout(v1)
-main_layout.addLayout(v2)
 
-window.setLayout(main_layout)
-window.show()
-app.exec()
+button_note_create = QPushButton('Создать заметку') #появляется окно с полем "Введите имя заметки"
+button_note_del = QPushButton('Удалить заметку')
+button_note_save = QPushButton('Сохранить заметку')
+
+
+field_tag = QLineEdit('')
+field_tag.setPlaceholderText('Введите тег...')
+field_text = QTextEdit()
+button_tag_add = QPushButton('Добавить к заметке')
+button_tag_del = QPushButton('Открепить от заметки')
+button_tag_search = QPushButton('Искать заметки по тегу')
+list_tags = QListWidget()
+list_tags_label = QLabel('Список тегов')
+
+
+#расположение виджетов по лэйаутам
+layout_notes = QHBoxLayout()
+col_1 = QVBoxLayout()
+col_1.addWidget(field_text)
+
+
+col_2 = QVBoxLayout()
+col_2.addWidget(list_notes_label)
+col_2.addWidget(list_notes)
+row_1 = QHBoxLayout()
+row_1.addWidget(button_note_create)
+row_1.addWidget(button_note_del)
+row_2 = QHBoxLayout()
+row_2.addWidget(button_note_save)
+col_2.addLayout(row_1)
+col_2.addLayout(row_2)
+
+
+col_2.addWidget(list_tags_label)
+col_2.addWidget(list_tags)
+col_2.addWidget(field_tag)
+row_3 = QHBoxLayout()
+row_3.addWidget(button_tag_add)
+row_3.addWidget(button_tag_del)
+row_4 = QHBoxLayout()
+row_4.addWidget(button_tag_search)
+
+
+col_2.addLayout(row_3)
+col_2.addLayout(row_4)
+
+
+layout_notes.addLayout(col_1, stretch = 2)
+layout_notes.addLayout(col_2, stretch = 1)
+notes_win.setLayout(layout_notes)
+
+
+'''Функционал приложения'''
+
+
+'''Работа с текстом заметки'''
+
+
+'''Работа с тегами заметки'''
+
+
+'''Запуск приложения'''
+#подключение обработки событий
+
+
+
+#запуск приложения 
+notes_win.show()
+
+
+with open("notes_data.json", "r") as file:
+    notes = json.load(file)
+list_notes.addItems(notes)
+
+
+app.exec_()
+
