@@ -81,6 +81,12 @@ def show_note():
     list_tags.clear()
     list_tags.addItems(notes[key]['теги'])
 
+def add_note():
+    note_name, ok = QInputDialog.getText(notes_win, 'Добавить заметку', 'Название заметки: ')
+    notes[note_name] = {'текст':'', 'теги': []}
+    list_notes.addItem(note_name)
+    list_tags.addItems(notes[note_name]['теги'])
+
 '''Работа с тегами заметки'''
 
 
@@ -88,7 +94,7 @@ def show_note():
 #подключение обработки событий
 
 list_notes.itemClicked.connect(show_note)
-
+button_note_create.clicked.connect(add_note)
 
 
 #запуск приложения 
@@ -102,18 +108,3 @@ list_notes.addItems(notes)
 
 
 app.exec_()
-
-
-
-
-
-{
-    "Теория относительности":{
-        "текст": "классная теория всем рекомендую",
-        "теги": ["физика","математика"]
-    },
-    "Теория вероятности":{
-        "текст": "классная теория всем не рекомендую",
-        "теги": ["русский язык","случайность"]
-    }
-}
