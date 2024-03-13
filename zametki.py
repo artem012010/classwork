@@ -73,10 +73,13 @@ notes_win.setLayout(layout_notes)
 
 
 '''Функционал приложения'''
-
-
 '''Работа с текстом заметки'''
 
+def show_note():
+    key = list_notes.selectedItems()[0].text()
+    field_text.setText(notes[key]['текст'])
+    list_tags.clear()
+    list_tags.addItems(notes[key]['теги'])
 
 '''Работа с тегами заметки'''
 
@@ -84,16 +87,33 @@ notes_win.setLayout(layout_notes)
 '''Запуск приложения'''
 #подключение обработки событий
 
+list_notes.itemClicked.connect(show_note)
+
 
 
 #запуск приложения 
 notes_win.show()
 
 
-with open("notes_data.json", "r") as file:
+with open("notes_data.json", "r", encoding='UTF-8') as file:
     notes = json.load(file)
+
 list_notes.addItems(notes)
 
 
 app.exec_()
 
+
+
+
+
+{
+    "Теория относительности":{
+        "текст": "классная теория всем рекомендую",
+        "теги": ["физика","математика"]
+    },
+    "Теория вероятности":{
+        "текст": "классная теория всем не рекомендую",
+        "теги": ["русский язык","случайность"]
+    }
+}
