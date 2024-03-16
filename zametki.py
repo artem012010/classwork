@@ -86,14 +86,32 @@ def add_note():
        notes[note_name] = {'текст':'','теги':[]}
        list_notes.addItem(note_name)
        list_tags.addItems(notes[note_name]['теги'])
-    
+
+def save_note():
+    if list_notes.selectedItems():
+        key = list_notes.selectedItems()[0].text()
+        notes[key]['текст'] = field_text.toPlainText()
+        with open('notes_data.json','w') as file:
+            json.dump(notes,file)
+
+def del_note():
+    if list_notes.selectedItems():
+        key = list_notes.selectedItems()[0].text()
+        del notes[key]
+        list_notes.clear()
+        list_tags.clear()
+        field_text.clear()
+        with open('notes_data.json','w') as file:
+            json.dump(notes,file)
+        list_notes.addItems(notes)
 
 '''Работа с тегами заметки'''
-
 '''Запуск приложения'''
 #подключение обработки событий
 list_notes.itemClicked.connect(show_note)
 button_note_create.clicked.connect(add_note)
+button_note_save.clicked.connect(save_note)
+button_note_del.clicked.connect(del_note)
 
 
 #запуск приложения 
